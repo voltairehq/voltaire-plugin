@@ -1,0 +1,13 @@
+{
+  "name": "voltaire",
+  "description": "Voltaire — AI paywall optimization. Analyzes your revenue data, benchmarks against industry standards, and applies paywall fixes directly in your codebase.",
+  "version": "1.0.0",
+  "author": {
+    "name": "Voltaire",
+    "email": "hello@voltaire.app"
+  },
+  "homepage": "https://voltaire.app",
+  "repository": "https://github.com/voltaire-app/voltaire-plugin",
+  "license": "MIT",
+  "keywords": ["paywall", "monetization", "revenue", "saas", "mobile", "conversion"]
+}

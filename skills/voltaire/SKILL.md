@@ -1,7 +1,7 @@
 ---
-name: fix-paywall
+name: voltaire
 description: |
-  Use this skill when the user wants to optimize their paywall, improve conversion rates, or apply Voltaire's revenue analysis to their codebase. Triggered by: "fix my paywall", "optimize my paywall", "apply Voltaire fix", "/mcp__voltaire__fix_paywall", "improve conversions".
+  Use this skill when the user wants to optimize their paywall, improve conversion rates, or apply Voltaire's revenue analysis to their codebase. Triggered by: "fix my paywall", "optimize my paywall", "/voltaire", "apply Voltaire fix", "improve conversions".
 metadata:
   mcp-server: voltaire
 ---

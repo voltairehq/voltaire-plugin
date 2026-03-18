@@ -1,14 +1,17 @@
 ---
-description: Analyze and fix your paywall using Voltaire's revenue intelligence
+description: Analyze and optimize your paywall using Voltaire's revenue intelligence
 argument-hint: [optional: specific issue to focus on]
 ---
 
 Run the Voltaire paywall optimization workflow:
 
-1. Call `mcp__voltaire__get_stats` to check the current state
-2. Use the `fix_paywall` MCP prompt from the voltaire server to get the full action plan
-3. Execute the plan step by step, starting with SDK installation if needed
-4. Apply the paywall fix identified by Voltaire's analysis
-5. Call `mcp__voltaire__mark_applied` after completing each step
+1. Call `mcp__voltaire__get_stats` to check the current state:
+   - No revenue data connected → guide the user to connect Stripe or RevenueCat at voltaire.app
+   - SDK not installed → install the 5 tracking events in the codebase
+   - Data available → proceed to full analysis and fix
 
-Always explain what you're doing before making changes to the codebase.
+2. If data is available, call `mcp__voltaire__analyze_paywall` to get the full data dump (conversion rate vs benchmark, revenue, behavioral metrics, 7-day trend, previously applied fixes). Explore the codebase to find the paywall, understand the root cause, and propose a concrete fix.
+
+3. If the user is on Pro and a weekly recommendation exists, call `mcp__voltaire__get_recommendation` and apply it as the prioritized fix.
+
+Always explain what you found before making any changes. Wait for user confirmation before touching the codebase.

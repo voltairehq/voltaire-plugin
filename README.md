@@ -44,7 +44,7 @@ Or say it naturally — "fix my paywall", "optimize my conversion rate" — and 
 - [Claude Code](https://claude.ai/code)
 - A [Voltaire](https://voltaire.app) account (free to start)
 
-Free plan: diagnostic + SDK install. Pro plan: weekly AI recommendations.
+Free plan: SDK install + data tracking + paywall analysis. Pro plan: weekly AI recommendations.
 
 ---
 

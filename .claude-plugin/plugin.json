@@ -7,7 +7,7 @@
     "email": "hello@voltaire.app"
   },
   "homepage": "https://voltaire.app",
-  "repository": "https://github.com/voltaire-app/voltaire-plugin",
+  "repository": "https://github.com/voltairehq/voltaire-plugin",
   "license": "MIT",
   "keywords": ["paywall", "monetization", "revenue", "saas", "mobile", "conversion"]
 }

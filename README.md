@@ -9,7 +9,7 @@ Voltaire connects your revenue data (Stripe, RevenueCat) to your codebase, bench
 ## Install
 
 ```
-/plugin install voltaire@hadinbasma
+/plugin install voltaire@voltairehq
 ```
 
 On first use, a browser window opens to connect your Voltaire account. No API key to copy.
@@ -51,5 +51,5 @@ Free plan: diagnostic + SDK install. Pro plan: weekly AI recommendations.
 ## Links
 
 - [voltaire.app](https://voltaire.app)
-- [github.com/hadinbasma/voltaire-plugin](https://github.com/hadinbasma/voltaire-plugin)
+- [github.com/voltairehq/voltaire-plugin](https://github.com/voltairehq/voltaire-plugin)
 - hello@voltaire.app

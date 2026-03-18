@@ -11,6 +11,7 @@ Voltaire is a revenue intelligence layer. It tracks paywall events, computes con
 - `mcp__voltaire__get_stats` — current state: revenue connection, SDK status, conversion rate, data volume
 - `mcp__voltaire__analyze_paywall` — full data dump: conversion vs benchmark, revenue, behavioral metrics, 7-day trend, previously applied fixes
 - `mcp__voltaire__get_recommendation` — latest weekly recommendation (Pro users only)
+- `mcp__voltaire__mark_applied` — log what was changed so future runs have full context
 
 ## Workflow
 
@@ -25,6 +26,8 @@ Voltaire is a revenue intelligence layer. It tracks paywall events, computes con
 
 4. **Pro recommendation** — if the user is on Pro, call `mcp__voltaire__get_recommendation` for the week's prioritized fix and apply it.
 
+5. **Log the fix** — after any change is applied, call `mcp__voltaire__mark_applied` with a brief note. This is what makes future runs smarter.
+
 ## SDK events to install
 When SDK is not present, add these 5 events to the app:
 - `session_started` — on app open
@@ -37,3 +40,4 @@ When SDK is not present, add these 5 events to the app:
 - Never apply changes without explaining what you found first
 - Always show paywall location, root cause, and proposed change before editing
 - `analyze_paywall` returns raw data — you reason about it, don't expect a pre-computed diagnosis
+- Always call `mark_applied` after every fix — this is what builds context over time

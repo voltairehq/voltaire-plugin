@@ -14,4 +14,6 @@ Run the Voltaire paywall optimization workflow:
 
 3. If the user is on Pro and a weekly recommendation exists, call `mcp__voltaire__get_recommendation` and apply it as the prioritized fix.
 
+4. After applying any change, call `mcp__voltaire__mark_applied` with a brief note of what was changed so future runs have full context.
+
 Always explain what you found before making any changes. Wait for user confirmation before touching the codebase.

@@ -2,7 +2,7 @@
   "mcpServers": {
     "voltaire": {
       "type": "http",
-      "url": "https://voltaire-back.onrender.com/mcp"
+      "url": "https://voltaire-back-wuh0.onrender.com/mcp"
     }
   }
 }

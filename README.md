@@ -42,7 +42,7 @@ Or say it naturally — "fix my paywall", "optimize my conversion rate" — and 
 ## Requirements
 
 - [Claude Code](https://claude.ai/code)
-- A [Voltaire](https://voltaire.app) account (free to start)
+- A [Voltaire](https://hivoltaire.com) account (free to start)
 
 Free plan: SDK install + data tracking + paywall analysis. Pro plan: weekly AI recommendations.
 
@@ -50,6 +50,6 @@ Free plan: SDK install + data tracking + paywall analysis. Pro plan: weekly AI r
 
 ## Links
 
-- [voltaire.app](https://voltaire.app)
+- [hivoltaire.com](https://hivoltaire.com)
 - [github.com/voltairehq/voltaire-plugin](https://github.com/voltairehq/voltaire-plugin)
-- hello@voltaire.app
+- hello@hivoltaire.com

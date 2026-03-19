@@ -4,9 +4,9 @@
   "version": "1.0.0",
   "author": {
     "name": "Voltaire",
-    "email": "hello@voltaire.app"
+    "email": "hello@hivoltaire.com"
   },
-  "homepage": "https://voltaire.app",
+  "homepage": "https://hivoltaire.com",
   "repository": "https://github.com/voltairehq/voltaire-plugin",
   "license": "MIT",
   "keywords": ["paywall", "monetization", "revenue", "saas", "mobile", "conversion"]

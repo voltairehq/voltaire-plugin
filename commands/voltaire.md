@@ -6,7 +6,7 @@ argument-hint: [optional: specific issue to focus on]
 Run the Voltaire paywall optimization workflow:
 
 1. Call `mcp__voltaire__get_stats` to check the current state:
-   - No revenue data connected → guide the user to connect Stripe or RevenueCat at voltaire.app
+   - No revenue data connected → guide the user to connect Stripe or RevenueCat at hivoltaire.com
    - SDK not installed → install the 5 tracking events in the codebase
    - Data available → proceed to full analysis and fix
 

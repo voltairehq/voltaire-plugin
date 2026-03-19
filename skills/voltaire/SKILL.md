@@ -16,7 +16,7 @@ Voltaire is a revenue intelligence layer. It tracks paywall events, computes con
 ## Workflow
 
 1. **Get current state** — call `mcp__voltaire__get_stats`:
-   - No revenue data → guide user to connect Stripe or RevenueCat at voltaire.app
+   - No revenue data → guide user to connect Stripe or RevenueCat at hivoltaire.com
    - SDK not installed → install 5 tracking events (see below)
    - Data available → proceed to full analysis
 

@@ -6,8 +6,9 @@ argument-hint: [optional: specific issue to focus on]
 Run the Voltaire paywall optimization workflow:
 
 1. Call `mcp__voltaire__get_stats` to check the current state:
-   - No revenue data connected → guide the user to connect Stripe or RevenueCat at hivoltaire.com
-   - SDK not installed → install the 5 tracking events in the codebase
+   - App not created yet → call `mcp__voltaire__create_app` to bootstrap (name, category)
+   - No Stripe connected → call `mcp__voltaire__setup` with the user's Stripe secret key
+   - SDK not installed → install the tracking events in the codebase
    - Data available → proceed to full analysis and fix
 
 2. If data is available, call `mcp__voltaire__analyze_paywall` to get the full data dump (conversion rate vs benchmark, revenue, behavioral metrics, 7-day trend, previously applied fixes). Explore the codebase to find the paywall, understand the root cause, and propose a concrete fix.

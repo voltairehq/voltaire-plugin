@@ -8,6 +8,8 @@ description: Use when the user wants to optimize their paywall or improve conver
 Voltaire is a revenue intelligence layer. It tracks paywall events, computes conversion metrics, benchmarks them against industry data, and exposes everything via MCP. Your job is to pull that data, explore the codebase, and apply a concrete fix.
 
 ## Available MCP tools
+- `mcp__voltaire__create_app` — first-run bootstrap: create the app (name, category). Returns the API key.
+- `mcp__voltaire__setup` — connect Stripe: takes `stripe_secret_key`, optionally `github_repo_url`
 - `mcp__voltaire__get_stats` — current state: revenue connection, SDK status, conversion rate, data volume
 - `mcp__voltaire__analyze_paywall` — full data dump: conversion vs benchmark, revenue, behavioral metrics, 7-day trend, previously applied fixes
 - `mcp__voltaire__get_recommendation` — latest weekly recommendation (Pro users only)
@@ -16,8 +18,9 @@ Voltaire is a revenue intelligence layer. It tracks paywall events, computes con
 ## Workflow
 
 1. **Get current state** — call `mcp__voltaire__get_stats`:
-   - No revenue data → guide user to connect Stripe or RevenueCat at hivoltaire.com
-   - SDK not installed → install 5 tracking events (see below)
+   - App not created → call `mcp__voltaire__create_app` (ask for app name and category)
+   - Stripe not connected → call `mcp__voltaire__setup` (ask the user for their Stripe secret key — find it at dashboard.stripe.com/apikeys)
+   - SDK not installed → install tracking events (see below)
    - Data available → proceed to full analysis
 
 2. **Analyze** — call `mcp__voltaire__analyze_paywall` to get the full data dump. This is raw data — you do the reasoning. Explore the codebase to find the paywall and understand the root cause.
@@ -29,9 +32,11 @@ Voltaire is a revenue intelligence layer. It tracks paywall events, computes con
 5. **Log the fix** — after any change is applied, call `mcp__voltaire__mark_applied` with a brief note. This is what makes future runs smarter.
 
 ## SDK events to install
-When SDK is not present, add these 5 events to the app:
+When SDK is not present, add these events to the app:
 - `session_started` — on app open
 - `feature_used` — on key feature interaction (pass `feature_name`)
+- `feature_gate_hit` — when a user hits a premium gate and is blocked (strongest upgrade intent signal)
+- `upgrade_clicked` — when a user taps an upgrade/pricing CTA but doesn't complete payment
 - `paywall_shown` — when paywall is displayed
 - `paywall_dismissed` — when user closes without converting
 - `paywall_converted` — on successful subscription

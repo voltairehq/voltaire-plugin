@@ -2,7 +2,7 @@
 
 Fix your paywall conversion rate with AI — directly inside Claude Code.
 
-Voltaire connects your revenue data (Stripe, RevenueCat) to your codebase, benchmarks your conversion rate against industry data, and applies targeted fixes through Claude Code.
+Voltaire connects your Stripe revenue data to your codebase, benchmarks your conversion rate against industry data, and applies targeted fixes through Claude Code.
 
 ---
 
@@ -42,7 +42,7 @@ Or say it naturally — "fix my paywall", "optimize my conversion rate" — and 
 ## Requirements
 
 - [Claude Code](https://claude.ai/code)
-- A [Voltaire](https://hivoltaire.com) account (free to start)
+- A Stripe account
 
 Free plan: SDK install + data tracking + paywall analysis. Pro plan: weekly AI recommendations.
 

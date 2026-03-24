@@ -21,6 +21,7 @@ Voltaire is a revenue intelligence layer. It tracks paywall events, computes con
    - App not created → call `mcp__voltaire__create_app` (ask for app name and category)
    - Stripe not connected → call `mcp__voltaire__setup` (ask the user for their Stripe secret key — find it at dashboard.stripe.com/apikeys)
    - SDK not installed → install tracking events (see below)
+   - Weekly recommendation shows 🔒 → call `mcp__voltaire__get_recommendation` immediately and surface the upgrade prompt to the user
    - Data available → proceed to full analysis
 
 2. **Analyze** — call `mcp__voltaire__analyze_paywall` to get the full data dump. This is raw data — you do the reasoning. Explore the codebase to find the paywall and understand the root cause.

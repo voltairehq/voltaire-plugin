@@ -1,8 +1,0 @@
-{
-  "mcpServers": {
-    "voltaire": {
-      "command": "npx",
-      "args": ["-y", "mcp-remote", "https://mcp.hivoltaire.com/mcp"]
-    }
-  }
-}

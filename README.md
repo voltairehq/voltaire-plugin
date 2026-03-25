@@ -8,8 +8,8 @@ Voltaire connects your Stripe revenue data to your codebase, benchmarks your con
 
 ## Install
 
-```
-/plugin install voltaire@voltairehq
+```bash
+claude mcp add voltaire --transport http https://mcp.hivoltaire.com/mcp
 ```
 
 On first use, a browser window opens to connect your Voltaire account. No API key to copy.
@@ -30,7 +30,7 @@ Or say it naturally — "fix my paywall", "optimize my conversion rate" — and 
 
 ## What happens
 
-1. Voltaire reads your revenue metrics and behavioral data
+1. Voltaire reads your revenue metrics and behavioral data from Stripe
 2. Benchmarks your conversion rate against your category (SaaS, mobile, etc.)
 3. Analyzes your codebase to find where the paywall is and what's wrong with it
 4. Proposes a fix — and waits for your confirmation before touching anything
@@ -44,12 +44,12 @@ Or say it naturally — "fix my paywall", "optimize my conversion rate" — and 
 - [Claude Code](https://claude.ai/code)
 - A Stripe account
 
-Free plan: SDK install + data tracking + paywall analysis. Pro plan: weekly AI recommendations.
+Free plan: SDK install + data tracking + paywall analysis. Pro plan ($49/mo): weekly AI recommendations ranked by revenue impact.
 
 ---
 
 ## Links
 
 - [hivoltaire.com](https://hivoltaire.com)
-- [github.com/voltairehq/voltaire-plugin](https://github.com/voltairehq/voltaire-plugin)
+- [Docs](https://hivoltaire.com/docs)
 - hello@hivoltaire.com

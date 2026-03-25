@@ -2,7 +2,7 @@
   "mcpServers": {
     "voltaire": {
       "command": "npx",
-      "args": ["-y", "mcp-remote", "https://voltaire-back-wuh0.onrender.com/mcp"]
+      "args": ["-y", "mcp-remote", "https://mcp.hivoltaire.com/mcp"]
     }
   }
 }

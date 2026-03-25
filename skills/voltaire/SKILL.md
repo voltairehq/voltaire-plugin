@@ -1,4 +1,5 @@
 ---
+name: voltaire
 description: Use when the user wants to optimize their paywall or improve conversion rates. Triggered by: "fix my paywall", "optimize my paywall", "/voltaire", "improve conversions".
 ---
 

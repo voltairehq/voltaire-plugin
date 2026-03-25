@@ -1,13 +1,14 @@
 {
   "name": "voltaire",
-  "description": "Voltaire — AI paywall optimization. Analyzes your revenue data, benchmarks against industry standards, and applies paywall fixes directly in your codebase.",
+  "description": "Fix your paywall conversion rate. Voltaire connects your Stripe, reads your codebase, and ships a first fix — all in one session.",
   "version": "1.0.0",
   "author": {
     "name": "Voltaire",
-    "email": "hello@hivoltaire.com"
+    "email": "hello@hivoltaire.com",
+    "url": "https://hivoltaire.com"
   },
   "homepage": "https://hivoltaire.com",
   "repository": "https://github.com/voltairehq/voltaire-plugin",
   "license": "MIT",
-  "keywords": ["paywall", "monetization", "revenue", "saas", "mobile", "conversion"]
+  "keywords": ["paywall", "conversion", "stripe", "saas", "revenue", "analytics"]
 }

@@ -14,7 +14,7 @@ If the tools are available, run the full workflow:
 1. Call `mcp__voltaire__get_stats`:
    - App not created → call `mcp__voltaire__create_app` (ask for app name and category)
    - Stripe not connected → call `mcp__voltaire__setup` with Stripe secret key
-   - SDK not installed → install the 7 tracking events in the codebase
+   - SDK not installed → install the 7 tracking events in the codebase, then tell the user: "Events are now tracking. Run `/voltaire` again once you have real traffic."
    - Data available → proceed to full analysis
 
 2. Call `mcp__voltaire__analyze_paywall` for the full data dump. Explore the codebase to find the paywall, understand the root cause, propose a concrete fix.
@@ -24,3 +24,5 @@ If the tools are available, run the full workflow:
 4. After any change, call `mcp__voltaire__mark_applied` with a brief note.
 
 Always explain what you found before making changes. Wait for confirmation before touching the codebase.
+
+**Important:** There is no Voltaire web dashboard. Never tell the user to "check the dashboard" — all data surfaces through these MCP tools. Everything goes through `/voltaire`.

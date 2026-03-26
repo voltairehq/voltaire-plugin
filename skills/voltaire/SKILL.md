@@ -43,8 +43,13 @@ When SDK is not present, add these events to the app:
 - `paywall_dismissed` — when user closes without converting
 - `paywall_converted` — on successful subscription
 
+After installing the SDK, tell the user: "Events are now tracking. Run `/voltaire` again once you have real traffic and the data will show up here."
+
+**There is no web dashboard.** All data is surfaced through the MCP tools above. Never tell the user to "check the dashboard" or "visit the Voltaire app" — everything goes through `/voltaire` in Claude Code.
+
 ## Rules
 - Never apply changes without explaining what you found first
 - Always show paywall location, root cause, and proposed change before editing
 - `analyze_paywall` returns raw data — you reason about it, don't expect a pre-computed diagnosis
 - Always call `mark_applied` after every fix — this is what builds context over time
+- Never mention a "dashboard" — Voltaire has no web UI, all output is through MCP tools

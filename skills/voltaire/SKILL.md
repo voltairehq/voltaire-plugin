@@ -22,7 +22,7 @@ The only time you stop and wait is when you need something from the user (app na
 
 1. **Get current state** — call `mcp__voltaire__get_stats`:
    - App not created → call `mcp__voltaire__create_app`. Ask for name + category if needed, then **immediately continue** — do not stop after app creation.
-   - Stripe not connected → try to read `STRIPE_SECRET_KEY` from the project `.env` first. If found, call `mcp__voltaire__setup` with it. If not found, ask the user for their Stripe key (sk_live_... or sk_test_..., found at dashboard.stripe.com/apikeys), then call `mcp__voltaire__setup`. After setup returns, **immediately continue** — do not stop.
+   - Stripe not connected → look for `STRIPE_SECRET_KEY` in backend `.env` files (e.g. `voltaire_back/.env`, `backend/.env`, `server/.env`, `api/.env`). Stripe keys are never in the frontend. If found, call `mcp__voltaire__setup` with it — **do not display the key in your response**. If not found, ask the user to paste it, then call `mcp__voltaire__setup`. After setup returns, **immediately continue** — do not stop.
    - Otherwise → continue below.
 
 2. **Analyze** — call `mcp__voltaire__analyze_paywall` + explore the codebase to find the paywall. Stripe data alone is enough for a first diagnosis — don't wait for SDK data.

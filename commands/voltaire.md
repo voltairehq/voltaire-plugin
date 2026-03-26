@@ -15,7 +15,7 @@ The only stops are when you need input from the user (app name, Stripe key). Eve
 
 1. Call `mcp__voltaire__get_stats`:
    - App not created → call `mcp__voltaire__create_app`, then keep going immediately.
-   - Stripe not connected → check the project `.env` for `STRIPE_SECRET_KEY` first. If found, use it. If not, ask the user. Call `mcp__voltaire__setup`, then keep going immediately.
+   - Stripe not connected → look for `STRIPE_SECRET_KEY` in backend `.env` files only (`backend/.env`, `server/.env`, `api/.env`, etc. — never in the frontend). If found, call `mcp__voltaire__setup` without displaying the key. If not found, ask the user to paste it. Then keep going immediately.
    - Otherwise → keep going.
 
 2. Call `mcp__voltaire__analyze_paywall` + explore the codebase to find the paywall. Stripe data alone is enough for a first fix — don't wait for SDK.

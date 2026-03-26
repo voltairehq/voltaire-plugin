@@ -18,16 +18,18 @@ Voltaire is a revenue intelligence layer. It tracks paywall events, computes con
 
 ## Workflow
 
+The only time you stop and wait is when you need something from the user (app name, Stripe key). Everything else runs in one session without interruption.
+
 1. **Get current state** — call `mcp__voltaire__get_stats`:
-   - App not created → call `mcp__voltaire__create_app` (ask for app name and category). Stop.
-   - Stripe not connected → call `mcp__voltaire__setup` (ask for Stripe secret key — find it at dashboard.stripe.com/apikeys). Stop.
+   - App not created → call `mcp__voltaire__create_app`. Ask for name + category if needed, then **immediately continue** — do not stop after app creation.
+   - Stripe not connected → try to read `STRIPE_SECRET_KEY` from the project `.env` first. If found, call `mcp__voltaire__setup` with it. If not found, ask the user for their Stripe key (sk_live_... or sk_test_..., found at dashboard.stripe.com/apikeys), then call `mcp__voltaire__setup`. After setup returns, **immediately continue** — do not stop.
    - Otherwise → continue below.
 
 2. **Analyze** — call `mcp__voltaire__analyze_paywall` + explore the codebase to find the paywall. Stripe data alone is enough for a first diagnosis — don't wait for SDK data.
 
-3. **Install SDK if missing** — if `get_stats` showed SDK not installed, install the 7 events now (see below). Do this alongside the analysis, not instead of it. Tell the user: "I've also added tracking events — next time you run `/voltaire` there will be behavioral data to work with."
+3. **Install SDK if missing** — if SDK is not installed, do it now, in the same session. Check if `VOLTAIRE_API_KEY` is already in the project `.env` (it was added when the app was created). If missing, add it. Then install the 7 tracking events (see below).
 
-4. **Fix** — propose a concrete change based on what you found. Show the user the paywall location, root cause, and proposed fix before touching anything.
+4. **Fix** — propose a concrete change based on what you found. Show the user the paywall location, root cause, and proposed fix before touching anything. Wait for confirmation, then apply.
 
 5. **Pro recommendation** — if on Pro, call `mcp__voltaire__get_recommendation` for this week's prioritized fix.
 

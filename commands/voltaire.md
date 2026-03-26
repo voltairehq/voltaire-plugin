@@ -11,14 +11,16 @@ Then stop.
 
 If the tools are available, run the full workflow:
 
+The only stops are when you need input from the user (app name, Stripe key). Everything else runs in one session without interruption.
+
 1. Call `mcp__voltaire__get_stats`:
-   - App not created → call `mcp__voltaire__create_app`. Stop.
-   - Stripe not connected → ask for Stripe secret key, call `mcp__voltaire__setup`. Stop.
-   - Otherwise → continue.
+   - App not created → call `mcp__voltaire__create_app`, then keep going immediately.
+   - Stripe not connected → check the project `.env` for `STRIPE_SECRET_KEY` first. If found, use it. If not, ask the user. Call `mcp__voltaire__setup`, then keep going immediately.
+   - Otherwise → keep going.
 
 2. Call `mcp__voltaire__analyze_paywall` + explore the codebase to find the paywall. Stripe data alone is enough for a first fix — don't wait for SDK.
 
-3. If SDK not installed → install the 7 events in the codebase (alongside the analysis, not instead of it). Tell the user: "Tracking events added — next run will have behavioral data."
+3. If SDK not installed → install the 7 events now, in this same session. Check if `VOLTAIRE_API_KEY` is in the project `.env` (added during app creation) — if missing, add it.
 
 4. Propose a concrete fix based on what you found. Wait for confirmation before editing.
 

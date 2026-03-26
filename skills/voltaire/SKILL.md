@@ -33,6 +33,31 @@ Voltaire is a revenue intelligence layer. It tracks paywall events, computes con
 
 6. **Log the fix** — call `mcp__voltaire__mark_applied` after every applied change. This is what makes future runs smarter.
 
+7. **End-of-run summary** — always close with a summary of what was done and what happens next. Adapt to what actually happened this session:
+
+   ```
+   Here's what Voltaire set up:
+   ✅ Stripe connected — revenue history imported
+   ✅ Codebase analyzed — [paywall found in X file, root cause: Y]
+   ✅ Fix applied — [one line]
+   ✅ SDK installed — 7 tracking events added to your codebase
+
+   What happens automatically from now on:
+   - Every day: Voltaire analyzes your data and emails you a digest (conversion delta, anomalies)
+   - Every hour: anomaly detection — if your conversion drops sharply, you'll get an alert
+   - Every Monday: a new recommendation is generated from the latest 7 days of data
+
+   Run /voltaire again anytime to see updated data and get the next fix.
+   ```
+
+   If the user is on Free, add:
+   ```
+   🔒 Your weekly recommendation is ready but locked.
+   Upgrade to Pro ($49/mo) to unlock it + get behavioral signals (bounce rate, feature correlation, which users are most likely to convert) + anomaly alerts by email.
+   ```
+
+   Never mention a web app or dashboard — everything is here in Claude Code.
+
 ## SDK events to install
 When SDK is not present, add these events to the app:
 - `session_started` — on app open

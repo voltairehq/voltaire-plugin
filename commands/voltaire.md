@@ -26,6 +26,12 @@ If the tools are available, run the full workflow:
 
 6. After any change, call `mcp__voltaire__mark_applied` with a brief note.
 
+7. End every first run with a summary:
+   - What was done (Stripe connected, codebase analyzed, fix applied, SDK installed)
+   - What happens automatically (daily digest email, hourly anomaly detection, Monday recommendations)
+   - How to see data again: "Run /voltaire"
+   - If Free plan: "🔒 Your weekly recommendation is locked. Upgrade to Pro ($49/mo) to unlock it + behavioral signals + anomaly alerts."
+
 Always explain what you found before making changes. Wait for confirmation before touching the codebase.
 
 **Important:** There is no Voltaire web dashboard. Never tell the user to "check the dashboard" — all data surfaces through these MCP tools. Everything goes through `/voltaire`.

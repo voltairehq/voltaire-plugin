@@ -19,19 +19,19 @@ Voltaire is a revenue intelligence layer. It tracks paywall events, computes con
 ## Workflow
 
 1. **Get current state** — call `mcp__voltaire__get_stats`:
-   - App not created → call `mcp__voltaire__create_app` (ask for app name and category)
-   - Stripe not connected → call `mcp__voltaire__setup` (ask the user for their Stripe secret key — find it at dashboard.stripe.com/apikeys)
-   - SDK not installed → install tracking events (see below)
-   - Weekly recommendation shows 🔒 → call `mcp__voltaire__get_recommendation` immediately and surface the upgrade prompt to the user
-   - Data available → proceed to full analysis
+   - App not created → call `mcp__voltaire__create_app` (ask for app name and category). Stop.
+   - Stripe not connected → call `mcp__voltaire__setup` (ask for Stripe secret key — find it at dashboard.stripe.com/apikeys). Stop.
+   - Otherwise → continue below.
 
-2. **Analyze** — call `mcp__voltaire__analyze_paywall` to get the full data dump. This is raw data — you do the reasoning. Explore the codebase to find the paywall and understand the root cause.
+2. **Analyze** — call `mcp__voltaire__analyze_paywall` + explore the codebase to find the paywall. Stripe data alone is enough for a first diagnosis — don't wait for SDK data.
 
-3. **Fix** — propose a concrete change. Show the user what you found and what you want to change before touching anything.
+3. **Install SDK if missing** — if `get_stats` showed SDK not installed, install the 7 events now (see below). Do this alongside the analysis, not instead of it. Tell the user: "I've also added tracking events — next time you run `/voltaire` there will be behavioral data to work with."
 
-4. **Pro recommendation** — if the user is on Pro, call `mcp__voltaire__get_recommendation` for the week's prioritized fix and apply it.
+4. **Fix** — propose a concrete change based on what you found. Show the user the paywall location, root cause, and proposed fix before touching anything.
 
-5. **Log the fix** — after any change is applied, call `mcp__voltaire__mark_applied` with a brief note. This is what makes future runs smarter.
+5. **Pro recommendation** — if on Pro, call `mcp__voltaire__get_recommendation` for this week's prioritized fix.
+
+6. **Log the fix** — call `mcp__voltaire__mark_applied` after every applied change. This is what makes future runs smarter.
 
 ## SDK events to install
 When SDK is not present, add these events to the app:

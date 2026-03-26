@@ -69,7 +69,7 @@ When SDK is not installed:
 npm install voltaire-sdk
 ```
 
-**2. Add the API key to `.env`** (it was returned by `create_app` — add it if not already there)
+**2. Add the API key to `.env`** — `create_app` returned it. Write it yourself into the project `.env` file. Don't ask the user to do it.
 ```
 VOLTAIRE_API_KEY=volt_xxx
 ```

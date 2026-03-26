@@ -60,17 +60,42 @@ The only time you stop and wait is when you need something from the user (app na
 
    Never mention a web app or dashboard — everything is here in Claude Code.
 
-## SDK events to install
-When SDK is not present, add these events to the app:
-- `session_started` — on app open
-- `feature_used` — on key feature interaction (pass `feature_name`)
-- `feature_gate_hit` — when a user hits a premium gate and is blocked (strongest upgrade intent signal)
-- `upgrade_clicked` — when a user taps an upgrade/pricing CTA but doesn't complete payment
-- `paywall_shown` — when paywall is displayed
-- `paywall_dismissed` — when user closes without converting
-- `paywall_converted` — on successful subscription
+## SDK installation
 
-After installing the SDK, tell the user: "Events are now tracking. Run `/voltaire` again once you have real traffic and the data will show up here."
+When SDK is not installed:
+
+**1. Install the package**
+```bash
+npm install voltaire-sdk
+```
+
+**2. Add the API key to `.env`** (it was returned by `create_app` — add it if not already there)
+```
+VOLTAIRE_API_KEY=volt_xxx
+```
+
+**3. Create `src/voltaire.ts`** (or `.js`) — initialize once at app startup:
+```ts
+import Voltaire from 'voltaire-sdk'
+Voltaire.init({ apiKey: import.meta.env.VITE_VOLTAIRE_API_KEY })
+export default Voltaire
+```
+Adapt the env var name to the framework (`process.env.VOLTAIRE_API_KEY` for Node, `import.meta.env.VITE_VOLTAIRE_API_KEY` for Vite, etc.)
+
+**4. Add the 7 tracking calls** in the right places:
+```ts
+import Voltaire from './voltaire'
+
+Voltaire.track('session_started')                          // on app open
+Voltaire.track('feature_used', { feature: 'feature_name' }) // on key feature use
+Voltaire.track('feature_gate_hit', { feature: 'x' })      // user hit premium gate (blocked)
+Voltaire.track('upgrade_clicked')                          // user tapped upgrade CTA
+Voltaire.track('paywall_shown')                            // paywall displayed
+Voltaire.track('paywall_dismissed')                        // user closed without paying
+Voltaire.track('paywall_converted')                        // successful subscription
+```
+
+Find the right locations by reading the codebase — don't add them blindly. After installing, call `mcp__voltaire__mark_applied` with `type: "sdk"`.
 
 **There is no web dashboard.** All data is surfaced through the MCP tools above. Never tell the user to "check the dashboard" or "visit the Voltaire app" — everything goes through `/voltaire` in Claude Code.
 

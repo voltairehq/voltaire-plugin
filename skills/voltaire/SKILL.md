@@ -20,45 +20,56 @@ Voltaire is a revenue intelligence layer. It tracks paywall events, computes con
 
 The only time you stop and wait is when you need something from the user (app name, Stripe key). Everything else runs in one session without interruption.
 
-1. **Get current state** — call `mcp__voltaire__get_stats`:
-   - App not created → call `mcp__voltaire__create_app`. Ask for name + category if needed, then **immediately continue** — do not stop after app creation.
-   - Stripe not connected → look for `STRIPE_SECRET_KEY` in backend `.env` files (e.g. `voltaire_back/.env`, `backend/.env`, `server/.env`, `api/.env`). Stripe keys are never in the frontend. If found, call `mcp__voltaire__setup` with it — **do not display the key in your response**. If not found, ask the user to paste it, then call `mcp__voltaire__setup`. After setup returns, **immediately continue** — do not stop.
-   - Otherwise → continue below.
+First, call `mcp__voltaire__get_stats` and determine which mode you're in:
 
-2. **Analyze** — call `mcp__voltaire__analyze_paywall` + explore the codebase to find the paywall. Stripe data alone is enough for a first diagnosis — don't wait for SDK data.
+---
 
-3. **Install SDK if missing** — if SDK is not installed, do it now, in the same session. Check if `VOLTAIRE_API_KEY` is already in the project `.env` (it was added when the app was created). If missing, add it. Then install the 7 tracking events (see below).
+### First run (Stripe not connected OR SDK not installed)
 
-4. **Fix** — propose a concrete change based on what you found. Show the user the paywall location, root cause, and proposed fix before touching anything. Wait for confirmation, then apply.
-
-5. **Pro recommendation** — if on Pro, call `mcp__voltaire__get_recommendation` for this week's prioritized fix.
-
-6. **Log the fix** — call `mcp__voltaire__mark_applied` after every applied change. This is what makes future runs smarter.
-
-7. **End-of-run summary** — always close with a summary of what was done and what happens next. Adapt to what actually happened this session:
-
+1. **App not created** → call `mcp__voltaire__create_app`. Ask for name + category if needed, then immediately continue.
+2. **Stripe not connected** → look for `STRIPE_SECRET_KEY` in backend `.env` files (`backend/.env`, `server/.env`, `api/.env`, etc. — Stripe keys are never in the frontend). If found, call `mcp__voltaire__setup` — **do not display the key**. If not found, ask the user. Then immediately continue.
+3. **Analyze** — call `mcp__voltaire__analyze_paywall` + explore the codebase to find the paywall. Stripe data alone is enough.
+4. **Install SDK if missing** — `npm install voltaire-sdk`, write `VOLTAIRE_API_KEY` to `.env`, create the init file, add the 7 tracking calls (see SDK section below).
+5. **Fix** — propose a concrete change, wait for confirmation, apply it.
+6. **Log** — call `mcp__voltaire__mark_applied` for the SDK install and for the fix.
+7. **First-run summary:**
    ```
    Here's what Voltaire set up:
    ✅ Stripe connected — revenue history imported
-   ✅ Codebase analyzed — [paywall found in X file, root cause: Y]
-   ✅ Fix applied — [one line]
-   ✅ SDK installed — 7 tracking events added to your codebase
+   ✅ SDK installed — 7 tracking events now collecting data
+   ✅ First fix applied — [one line]
 
-   What happens automatically from now on:
-   - Every day: Voltaire analyzes your data and emails you a digest (conversion delta, anomalies)
-   - Every hour: anomaly detection — if your conversion drops sharply, you'll get an alert
-   - Every Monday: a new recommendation is generated from the latest 7 days of data
+   What happens automatically:
+   - Every day: digest email with conversion delta
+   - Every hour: anomaly detection
+   - Every Monday: new recommendation from latest data
 
-   Run /voltaire again anytime to see updated data and get the next fix.
+   Run /voltaire again in a week — by then behavioral data will be flowing and the analysis will be much sharper.
    ```
+   If Free plan: "🔒 Weekly recommendation locked. Upgrade to Pro ($49/mo) at https://app.hivoltaire.com/account"
 
-   If the user is on Free, add:
-   ```
-   🔒 Your weekly recommendation is ready but locked.
-   Upgrade to Pro ($49/mo) to unlock it + get behavioral signals (bounce rate, feature correlation, which users are most likely to convert) + anomaly alerts by email.
-   ```
+---
 
-   Never mention a web app or dashboard — everything is here in Claude Code.
+### Recurring run (Stripe connected + SDK installed)
+
+Don't repeat setup. Focus entirely on what's new and what to do next.
+
+1. **Call `mcp__voltaire__analyze_paywall`** — look at the data with fresh eyes:
+   - What moved since last time? (conversion rate delta, revenue delta)
+   - Any anomalies flagged?
+   - Impact of the last fix if data is available
+   - Which behavioral signals stand out (Pro)?
+
+2. **If on Pro** — call `mcp__voltaire__get_recommendation` for this week's prioritized fix.
+
+3. **Propose the next fix** based on what the data shows. Reference what changed since last run. Wait for confirmation, apply, call `mcp__voltaire__mark_applied`.
+
+4. **Recurring summary** (short):
+   ```
+   Since last time: [conversion X% → Y%, revenue delta, anomaly if any]
+   Fix applied: [one line]
+   Next run: check back after [timeframe] to measure impact.
+   ```
 
 ## SDK installation
 

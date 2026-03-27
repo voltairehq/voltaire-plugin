@@ -47,7 +47,7 @@ First, call `mcp__voltaire__get_stats` and determine which mode you're in:
    - Every hour: anomaly detection
    - Every Monday: new recommendation from latest data
 
-   Run /voltaire again in a week — by then behavioral data will be flowing and the analysis will be much sharper.
+   Run /voltaire anytime — the more data flows in, the sharper the analysis gets.
    ```
    If Free plan: "🔒 Weekly recommendation locked. Upgrade to Pro ($49/mo) at https://app.hivoltaire.com/account"
 

@@ -120,6 +120,12 @@ Voltaire.track('paywall_dismissed')                        // user closed withou
 Voltaire.track('paywall_converted')                        // successful subscription
 ```
 
+**TypeScript projects:** always call `Voltaire.track()` directly — never wrap it in a function with a custom event string type. If the project has an existing analytics wrapper that defines its own event type, import the SDK's type instead of redefining it:
+```ts
+import type { EventType } from 'voltaire-sdk'
+```
+Failure to do this causes TS2345 build errors (`feature_gate_hit not assignable to EventType`).
+
 Find the right locations by reading the codebase — don't add them blindly. After installing, call `mcp__voltaire__mark_applied` with `type: "sdk"`.
 
 **There is no web dashboard.** All data is surfaced through the MCP tools above. Never tell the user to "check the dashboard" or "visit the Voltaire app" — everything goes through `/voltaire` in Claude Code.

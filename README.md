@@ -16,26 +16,27 @@ On first use, a browser window opens to connect your Voltaire account. No API ke
 
 ---
 
-## Usage
+## Commands
 
-Once installed, just run:
+| Command | What it does |
+|---------|-------------|
+| `/voltaire` | Full session: connect Stripe, analyze codebase, apply a fix |
+| `/voltaire-status` | Quick pulse check — conversion rate, revenue, trend |
+| `/voltaire-digest` | Weekly digest — what moved, what worked, what to watch |
+| `/voltaire-undo` | Revert the last fix Voltaire applied |
 
-```
-/voltaire
-```
-
-Or say it naturally — "fix my paywall", "optimize my conversion rate" — and Claude picks it up automatically.
+Or say it naturally — "fix my paywall", "how is my conversion rate", "undo that last change" — and Claude picks it up automatically.
 
 ---
 
-## What happens
+## What `/voltaire` does
 
-1. Voltaire reads your revenue metrics and behavioral data from Stripe
+1. Connects your Stripe account and imports revenue history
 2. Benchmarks your conversion rate against your category (SaaS, mobile, etc.)
-3. Analyzes your codebase to find where the paywall is and what's wrong with it
-4. Proposes a fix — and waits for your confirmation before touching anything
-5. Applies the fix: SDK install, paywall repositioning, copy, timing
-6. Logs what was changed so future sessions don't repeat the same work
+3. Explores your codebase to find the paywall
+4. Proposes a fix — waits for your confirmation before touching anything
+5. Installs the SDK to start collecting behavioral data
+6. Logs what was changed so future sessions build on it
 
 ---
 
@@ -44,7 +45,7 @@ Or say it naturally — "fix my paywall", "optimize my conversion rate" — and 
 - [Claude Code](https://claude.ai/code)
 - A Stripe account
 
-Free plan: SDK install + data tracking + paywall analysis. Pro plan ($49/mo): weekly AI recommendations ranked by revenue impact.
+Free plan: SDK install + data tracking + paywall analysis. Pro plan ($49/mo): weekly AI recommendations ranked by revenue impact + anomaly alerts + behavioral signals.
 
 ---
 

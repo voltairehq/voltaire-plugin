@@ -1,5 +1,6 @@
 ---
-description: Quick pulse check on your paywall — conversion rate, revenue, and any anomalies since last run
+name: voltaire-status
+description: Quick pulse check on your paywall. Triggered by "voltaire status", "how is my paywall", "check my conversion rate".
 argument-hint: [optional: specific metric to focus on]
 ---
 
@@ -18,7 +19,7 @@ If the tools are available:
    - Revenue this week vs last week
    - Any anomalies flagged
    - Last fix applied and its impact (if measurable)
-   - 7-day trend direction (up/flat/down)
+   - 7-day trend direction
 
 3. Output a compact status card — no prose, just facts:
    ```
@@ -35,6 +36,6 @@ If the tools are available:
 
 4. If data is thin (SDK not installed or < 7 days of data): say so clearly. Suggest running `/voltaire` to complete setup.
 
-5. If on Free plan and an anomaly was detected: mention "🔒 Anomaly alerts and behavioral signals require Pro ($49/mo)."
+5. If Free plan and anomaly detected: "🔒 Anomaly alerts and behavioral signals require Pro ($49/mo)."
 
-No fixes, no recommendations — this is read-only. For a full analysis and fix, run `/voltaire`.
+No fixes, no recommendations — read-only. For a full analysis and fix, run `/voltaire`.

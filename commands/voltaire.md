@@ -9,30 +9,66 @@ If the tool call fails or the tools are not available, tell the user:
 "Run `/mcp` in Claude Code, find Voltaire in the list, and click **Authenticate**. A browser will open to connect your account. Once done, run `/voltaire` again."
 Then stop.
 
-If the tools are available, run the full workflow:
+If the tools are available, call `mcp__voltaire__get_stats` and determine which mode you're in:
+
+---
+
+## First run (Stripe not connected OR SDK not installed)
 
 The only stops are when you need input from the user (app name, Stripe key). Everything else runs in one session without interruption.
 
-1. Call `mcp__voltaire__get_stats`:
-   - App not created → call `mcp__voltaire__create_app`, then keep going immediately.
-   - Stripe not connected → look for `STRIPE_SECRET_KEY` in backend `.env` files only (`backend/.env`, `server/.env`, `api/.env`, etc. — never in the frontend). If found, call `mcp__voltaire__setup` without displaying the key. If not found, ask the user to paste it. Then keep going immediately.
-   - Otherwise → keep going.
+1. **App not created** → call `mcp__voltaire__create_app`. Ask for name + category if needed, then immediately continue.
 
-2. Call `mcp__voltaire__analyze_paywall` + explore the codebase to find the paywall. Stripe data alone is enough for a first fix — don't wait for SDK.
+2. **Stripe not connected** → look for `STRIPE_SECRET_KEY` in backend `.env` files only (`backend/.env`, `server/.env`, `api/.env`, etc. — never in the frontend). If found, call `mcp__voltaire__setup` without displaying the key. If not found, ask the user to paste it. Then keep going immediately.
 
-3. If SDK not installed → install the 7 events now, in this same session. Check if `VOLTAIRE_API_KEY` is in the project `.env` (added during app creation) — if missing, add it.
+3. Call `mcp__voltaire__analyze_paywall` + explore the codebase to find the paywall. Stripe data alone is enough for a first fix — don't wait for SDK.
 
-4. Propose a concrete fix based on what you found. Wait for confirmation before editing.
+4. If SDK not installed → install it now in this same session: `npm install voltaire-sdk`, write `VOLTAIRE_API_KEY` to `.env` (don't ask the user — do it yourself), create the init file, add the 7 tracking calls in the right places.
 
-5. If on Pro, call `mcp__voltaire__get_recommendation` and apply the prioritized fix.
+5. Propose a concrete fix based on what you found. Wait for confirmation before editing.
 
-6. After any change, call `mcp__voltaire__mark_applied` with a brief note.
+6. After any change, call `mcp__voltaire__mark_applied` (once for SDK install, once for the fix).
 
-7. End every first run with a summary:
-   - What was done (Stripe connected, codebase analyzed, fix applied, SDK installed)
-   - What happens automatically (daily digest email, hourly anomaly detection, Monday recommendations)
-   - How to see data again: "Run /voltaire"
-   - If Free plan: "🔒 Your weekly recommendation is locked. Upgrade to Pro ($49/mo) to unlock it + behavioral signals + anomaly alerts."
+7. End with a summary:
+   ```
+   Here's what Voltaire set up:
+   ✅ Stripe connected — revenue history imported
+   ✅ SDK installed — 7 tracking events now collecting data
+   ✅ First fix applied — [one line]
+
+   What happens automatically:
+   - Every day: digest email with conversion delta
+   - Every hour: anomaly detection
+   - Every Monday: new recommendation from latest data
+
+   Run /voltaire again in a week — behavioral data will be flowing and the analysis will be much sharper.
+   ```
+   If Free plan: "🔒 Weekly recommendation locked. Upgrade to Pro ($49/mo) at https://app.hivoltaire.com/account"
+
+---
+
+## Recurring run (Stripe connected + SDK installed)
+
+Don't repeat setup. Focus entirely on what's new and what to do next.
+
+1. Call `mcp__voltaire__analyze_paywall` — look at the data with fresh eyes:
+   - What moved since last time? (conversion rate delta, revenue delta)
+   - Any anomalies flagged?
+   - Impact of the last fix if data is available
+   - Which behavioral signals stand out (Pro)?
+
+2. If on Pro → call `mcp__voltaire__get_recommendation` for this week's prioritized fix.
+
+3. Propose the next fix based on what the data shows. Reference what changed since last run. Wait for confirmation before editing. Apply, then call `mcp__voltaire__mark_applied`.
+
+4. End with a short summary:
+   ```
+   Since last time: [conversion X% → Y%, revenue delta, anomaly if any]
+   Fix applied: [one line]
+   Next run: check back after [timeframe] to measure impact.
+   ```
+
+---
 
 Always explain what you found before making changes. Wait for confirmation before touching the codebase.
 

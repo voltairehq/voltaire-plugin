@@ -27,7 +27,10 @@ First, call `mcp__voltaire__get_stats` and determine which mode you're in:
 ### First run (Stripe not connected OR SDK not installed)
 
 1. **App not created** → call `mcp__voltaire__create_app`. Ask for name + category if needed, then immediately continue.
-2. **Stripe not connected** → look for `STRIPE_SECRET_KEY` in backend `.env` files (`backend/.env`, `server/.env`, `api/.env`, etc. — Stripe keys are never in the frontend). If found, call `mcp__voltaire__setup` — **do not display the key**. If not found, ask the user. Then immediately continue.
+2. **Stripe not connected** → look for `STRIPE_SECRET_KEY` in backend `.env` files (`backend/.env`, `server/.env`, `api/.env`, etc. — Stripe keys are never in the frontend). If found:
+   - **Check if the key starts with `sk_test_`** → stop and tell the user: "This is a Stripe test key. Voltaire needs your live key to analyze real revenue. Find it at dashboard.stripe.com/apikeys → Secret key (`sk_live_...`). Without it, there's no real data to work with." Wait for the live key before continuing.
+   - If the key starts with `sk_live_` → call `mcp__voltaire__setup` — **do not display the key** — then immediately continue.
+   - If no key found → ask the user. Same test key check applies to whatever they paste.
 3. **Analyze** — call `mcp__voltaire__analyze_paywall` + explore the codebase to find the paywall. Stripe data alone is enough.
 4. **Install SDK if missing** — `npm install voltaire-sdk`, write `VOLTAIRE_API_KEY` to `.env`, create the init file, add the 7 tracking calls (see SDK section below).
 5. **Fix** — propose a concrete change, wait for confirmation, apply it.

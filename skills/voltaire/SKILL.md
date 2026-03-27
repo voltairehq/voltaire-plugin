@@ -55,23 +55,34 @@ First, call `mcp__voltaire__get_stats` and determine which mode you're in:
 
 ### Recurring run (Stripe connected + SDK installed)
 
-Don't repeat setup. Focus entirely on what's new and what to do next.
+Don't repeat setup. Lead with data — let the user drive.
 
-1. **Call `mcp__voltaire__analyze_paywall`** — look at the data with fresh eyes:
-   - What moved since last time? (conversion rate delta, revenue delta)
-   - Any anomalies flagged?
-   - Impact of the last fix if data is available
-   - Which behavioral signals stand out (Pro)?
+1. **Call `mcp__voltaire__analyze_paywall`**. If on Pro, also call `mcp__voltaire__get_recommendation`.
 
-2. **If on Pro** — call `mcp__voltaire__get_recommendation` for this week's prioritized fix.
-
-3. **Propose the next fix** based on what the data shows. Reference what changed since last run. Wait for confirmation, apply, call `mcp__voltaire__mark_applied`.
-
-4. **Recurring summary** (short):
+2. **Present a clear state of affairs — always, before doing anything:**
    ```
-   Since last time: [conversion X% → Y%, revenue delta, anomaly if any]
+   Since last run [X days ago]:
+
+   Conversion:  X% → Y%  [↑↓ +Z%]   (benchmark: B%)
+   Revenue:     $X this month  [↑↓ vs last month]
+   Last fix:    [description] — [impact if measurable, or "still collecting data"]
+   [Anomaly alert if flagged]
+
+   Pro recommendation: [one line] — est. +$X/mo  (or 🔒 if Free)
+   ```
+
+3. **Wait for the user to decide.** Don't propose a fix automatically. They might want to:
+   - Ask questions about the data
+   - Ask what's causing a specific pattern
+   - Ask for a fix recommendation
+   - Say "apply the recommendation" or "fix X"
+
+4. **Once they ask for an action** — propose it clearly (location, change, reason), wait for confirmation, apply it, call `mcp__voltaire__mark_applied`.
+
+5. **After applying:**
+   ```
    Fix applied: [one line]
-   Next run: check back after [timeframe] to measure impact.
+   Check back in [timeframe] to measure impact.
    ```
 
 ## SDK installation

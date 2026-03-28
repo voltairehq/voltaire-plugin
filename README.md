@@ -9,7 +9,7 @@ Voltaire connects your Stripe revenue data to your codebase, benchmarks your con
 ## Install
 
 ```bash
-claude plugin install https://github.com/voltairehq/voltaire-plugin
+curl -fsSL https://mcp.hivoltaire.com/install | bash
 ```
 
 A browser window opens to connect your Voltaire account. No API key to copy.

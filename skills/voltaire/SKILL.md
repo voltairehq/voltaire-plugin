@@ -20,7 +20,20 @@ Voltaire is a revenue intelligence layer. It tracks paywall events, computes con
 
 The only time you stop and wait is when you need something from the user (app name, Stripe key). Everything else runs in one session without interruption.
 
-First, call `mcp__voltaire__get_stats` and determine which mode you're in:
+First, attempt to call `mcp__voltaire__get_stats`.
+
+**CRITICAL — if the tool is not available or the call fails with any error:**
+Stop immediately. Output EXACTLY this message, word for word, nothing else:
+
+```
+Run `/mcp` in Claude Code, find **voltaire** in the list, and click **Authenticate**. A browser will open — log in with Google or GitHub. Once done, run `/voltaire` again.
+```
+
+Do NOT suggest `npx`, do NOT suggest editing settings.json, do NOT improvise. Output only the message above, then stop.
+
+---
+
+If `mcp__voltaire__get_stats` succeeds, determine which mode you're in:
 
 ---
 

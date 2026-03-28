@@ -59,6 +59,8 @@ Don't repeat setup. Lead with data — let the user drive.
 
 1. **Call `mcp__voltaire__analyze_paywall`**. If on Pro, also call `mcp__voltaire__get_recommendation`.
 
+   **If 0 SDK events received** — ask the user: "No events have been received yet. Did you add `VOLTAIRE_API_KEY` to your production environment (Render, Vercel, Netlify, etc.)? The `.env` file is local only — the SDK won't initialize in production without the key in your hosting dashboard."
+
 2. **Present a clear state of affairs — always, before doing anything:**
    ```
    Since last run [X days ago]:
@@ -98,6 +100,7 @@ npm install voltaire-sdk
 ```
 VOLTAIRE_API_KEY=volt_xxx
 ```
+⚠️ After writing the key, tell the user: "I've added `VOLTAIRE_API_KEY` to your `.env` file. If your app is deployed (Render, Vercel, Netlify, Railway, etc.), you also need to add it as an environment variable in your hosting dashboard — `.env` files are never deployed. Without this, the SDK won't initialize in production."
 
 **3. Create `src/voltaire.ts`** (or `.js`) — initialize once at app startup:
 ```ts

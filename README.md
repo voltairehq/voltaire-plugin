@@ -9,10 +9,10 @@ Voltaire connects your Stripe revenue data to your codebase, benchmarks your con
 ## Install
 
 ```bash
-claude mcp add voltaire --transport http https://mcp.hivoltaire.com/mcp
+claude plugin install https://github.com/voltairehq/voltaire-plugin
 ```
 
-On first use, a browser window opens to connect your Voltaire account. No API key to copy.
+A browser window opens to connect your Voltaire account. No API key to copy.
 
 ---
 

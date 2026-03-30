@@ -9,7 +9,7 @@ description: Use when the user wants to optimize their paywall or improve conver
 Voltaire is a revenue intelligence layer. It tracks paywall events, computes conversion metrics, benchmarks them against industry data, and exposes everything via MCP. Your job is to pull that data, explore the codebase, and apply a concrete fix.
 
 ## Available MCP tools
-- `mcp__voltaire__create_app` — first-run bootstrap: create the app (name, category). Returns the API key.
+- `mcp__voltaire__create_app` — first-run bootstrap: create the app (name, category). Returns the SDK token.
 - `mcp__voltaire__setup` — connect Stripe: takes `stripe_secret_key`, optionally `github_repo_url`
 - `mcp__voltaire__get_stats` — current state: revenue connection, SDK status, conversion rate, data volume
 - `mcp__voltaire__analyze_paywall` — full data dump: conversion vs benchmark, revenue, behavioral metrics, 7-day trend, previously applied fixes
@@ -45,7 +45,7 @@ If `mcp__voltaire__get_stats` succeeds, determine which mode you're in:
    - If the key starts with `sk_live_` → call `mcp__voltaire__setup` — **do not display the key** — then immediately continue.
    - If no key found → ask the user. Same test key check applies to whatever they paste.
 3. **Analyze** — call `mcp__voltaire__analyze_paywall` + explore the codebase to find the paywall. Stripe data alone is enough.
-4. **Install SDK if missing** — `npm install voltaire-sdk`, write `VOLTAIRE_API_KEY` to `.env`, create the init file, add the 7 tracking calls (see SDK section below).
+4. **Install SDK if missing** — `npm install voltaire-sdk`, write `VOLTAIRE_SDK_TOKEN` to `.env`, create the init file, add the 7 tracking calls (see SDK section below).
 5. **Fix** — propose a concrete change, wait for confirmation, apply it.
 6. **Log** — call `mcp__voltaire__mark_applied` for the SDK install and for the fix.
 7. **First-run summary:**
@@ -72,7 +72,7 @@ Don't repeat setup. Lead with data — let the user drive.
 
 1. **Call `mcp__voltaire__analyze_paywall`**. If on Pro, also call `mcp__voltaire__get_recommendation`.
 
-   **If 0 SDK events received** — ask the user: "No events have been received yet. Did you add `VOLTAIRE_API_KEY` to your production environment (Render, Vercel, Netlify, etc.)? The `.env` file is local only — the SDK won't initialize in production without the key in your hosting dashboard."
+   **If 0 SDK events received** — ask the user: "No events have been received yet. Did you add `VOLTAIRE_SDK_TOKEN` to your production environment (Render, Vercel, Netlify, etc.)? The `.env` file is local only — the SDK won't initialize in production without the token in your hosting dashboard."
 
 2. **Present a clear state of affairs — always, before doing anything:**
    ```
@@ -109,19 +109,19 @@ When SDK is not installed:
 npm install voltaire-sdk
 ```
 
-**2. Add the API key to `.env`** — `create_app` returned it. Write it yourself into the project `.env` file. Don't ask the user to do it.
+**2. Add the SDK token to `.env`** — `create_app` returned it. Write it yourself into the project `.env` file. Don't ask the user to do it.
 ```
-VOLTAIRE_API_KEY=volt_xxx
+VOLTAIRE_SDK_TOKEN=vt_xxx
 ```
-⚠️ After writing the key, tell the user: "I've added `VOLTAIRE_API_KEY` to your `.env` file. If your app is deployed (Render, Vercel, Netlify, Railway, etc.), you also need to add it as an environment variable in your hosting dashboard — `.env` files are never deployed. Without this, the SDK won't initialize in production."
+⚠️ After writing the token, tell the user: "I've added `VOLTAIRE_SDK_TOKEN` to your `.env` file. If your app is deployed (Render, Vercel, Netlify, Railway, etc.), you also need to add it as an environment variable in your hosting dashboard — `.env` files are never deployed. Without this, the SDK won't initialize in production."
 
 **3. Create `src/voltaire.ts`** (or `.js`) — initialize once at app startup:
 ```ts
 import Voltaire from 'voltaire-sdk'
-Voltaire.init({ apiKey: import.meta.env.VITE_VOLTAIRE_API_KEY })
+Voltaire.init({ apiKey: import.meta.env.VITE_VOLTAIRE_SDK_TOKEN })
 export default Voltaire
 ```
-Adapt the env var name to the framework (`process.env.VOLTAIRE_API_KEY` for Node, `import.meta.env.VITE_VOLTAIRE_API_KEY` for Vite, etc.)
+Adapt the env var name to the framework (`process.env.VOLTAIRE_SDK_TOKEN` for Node, `import.meta.env.VITE_VOLTAIRE_SDK_TOKEN` for Vite, etc.)
 
 **4. Add the 7 tracking calls** in the right places:
 ```ts

@@ -155,4 +155,4 @@ Find the right locations by reading the codebase — don't add them blindly. Aft
 - Always show paywall location, root cause, and proposed change before editing
 - `analyze_paywall` returns raw data — you reason about it, don't expect a pre-computed diagnosis
 - Always call `mark_applied` after every fix — this is what builds context over time
-- Never mention a "dashboard" — Voltaire has no web UI, all output is through MCP tools
+- Never mention a "dashboard" for data — use MCP tools

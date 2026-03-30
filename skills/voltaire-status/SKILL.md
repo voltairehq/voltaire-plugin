@@ -7,7 +7,7 @@ argument-hint: [optional: specific metric to focus on]
 First, check if the Voltaire MCP tools are available by attempting to call `mcp__voltaire__get_stats`.
 
 If the tool call fails, tell the user:
-"Run `/mcp` in Claude Code, find Voltaire in the list, and click **Authenticate**. Once done, run `/voltaire-status` again."
+"Run `/mcp` in Claude Code, find **voltaire** in the list, and click **Authenticate**. A browser will open — log in with Google or GitHub. Once done, run `/voltaire-status` again."
 Then stop.
 
 If the tools are available:

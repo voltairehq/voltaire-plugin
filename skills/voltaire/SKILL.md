@@ -118,10 +118,14 @@ VOLTAIRE_SDK_TOKEN=vt_xxx
 **3. Create `src/voltaire.ts`** (or `.js`) — initialize once at app startup:
 ```ts
 import Voltaire from 'voltaire-sdk'
-Voltaire.init({ apiKey: import.meta.env.VITE_VOLTAIRE_SDK_TOKEN })
+// Use the right env accessor for this project's framework:
+// - Vite/React:  import.meta.env.VITE_VOLTAIRE_SDK_TOKEN
+// - Next.js:     process.env.NEXT_PUBLIC_VOLTAIRE_SDK_TOKEN
+// - Node/other:  process.env.VOLTAIRE_SDK_TOKEN
+// Check package.json and existing env usage in the codebase to determine the correct one.
+Voltaire.init({ apiKey: process.env.VOLTAIRE_SDK_TOKEN })
 export default Voltaire
 ```
-Adapt the env var name to the framework (`process.env.VOLTAIRE_SDK_TOKEN` for Node, `import.meta.env.VITE_VOLTAIRE_SDK_TOKEN` for Vite, etc.)
 
 **4. Add the 7 tracking calls** in the right places:
 ```ts
@@ -144,7 +148,7 @@ Failure to do this causes TS2345 build errors (`feature_gate_hit not assignable 
 
 Find the right locations by reading the codebase — don't add them blindly. After installing, call `mcp__voltaire__mark_applied` with `type: "sdk"`.
 
-**There is no web dashboard.** All data is surfaced through the MCP tools above. Never tell the user to "check the dashboard" or "visit the Voltaire app" — everything goes through `/voltaire` in Claude Code.
+**Data lives in MCP tools, not the dashboard.** `app.hivoltaire.com` exists for account and billing only. Never tell the user to "check the dashboard" for their conversion data, SDK token, or recommendations — everything data-related goes through `/voltaire` in Claude Code. The SDK token can be found there if needed, but the MCP flow gives it automatically.
 
 ## Rules
 - Never apply changes without explaining what you found first

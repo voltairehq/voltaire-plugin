@@ -39,6 +39,8 @@ If `mcp__voltaire__get_stats` succeeds, determine which mode you're in:
 
 ### First run (Stripe not connected OR SDK not installed)
 
+**Start with a one-sentence greeting** — tell the user what Voltaire is about to do: connect Stripe, analyze their paywall conversion, install the SDK, and apply a first fix — all in this session. Then immediately continue without waiting.
+
 1. **App not created** → call `mcp__voltaire__create_app`. Ask for name + category if needed, then immediately continue.
 2. **Stripe not connected** → look for `STRIPE_SECRET_KEY` in backend `.env` files (`backend/.env`, `server/.env`, `api/.env`, etc. — Stripe keys are never in the frontend). If found:
    - **Check if the key starts with `sk_test_`** → stop and tell the user: "This is a Stripe test key. Voltaire needs your live key to analyze real revenue. Find it at dashboard.stripe.com/apikeys → Secret key (`sk_live_...`). Without it, there's no real data to work with." Wait for the live key before continuing.

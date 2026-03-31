@@ -1,7 +1,7 @@
 {
   "name": "voltaire",
   "description": "Fix your paywall conversion rate. Voltaire connects your Stripe, reads your codebase, and ships a first fix — all in one session.",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "author": {
     "name": "Voltaire",
     "email": "hello@hivoltaire.com",

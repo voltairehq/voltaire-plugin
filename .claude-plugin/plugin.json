@@ -1,6 +1,6 @@
 {
   "name": "voltaire",
-  "description": "Fix your paywall conversion rate. Voltaire connects your Stripe, reads your codebase, and ships a first fix — all in one session.",
+  "description": "Revenue intelligence for your paywall. Tracks user behavior, analyzes conversion data, and surfaces targeted fixes — directly in Claude Code.",
   "version": "1.1.0",
   "author": {
     "name": "Voltaire",

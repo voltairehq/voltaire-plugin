@@ -1,8 +1,6 @@
 # Voltaire — Claude Code Plugin
 
-Fix your paywall conversion rate with AI — directly inside Claude Code.
-
-Voltaire connects your Stripe revenue data to your codebase, benchmarks your conversion rate against industry data, and applies targeted fixes through Claude Code.
+Revenue intelligence for your paywall. Tracks user behavior, analyzes conversion data, and surfaces targeted fixes — directly in Claude Code.
 
 ---
 

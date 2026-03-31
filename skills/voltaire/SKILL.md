@@ -26,7 +26,7 @@ First, attempt to call `mcp__voltaire__get_stats`.
 Stop immediately. Output EXACTLY this message, word for word, nothing else:
 
 ```
-Run `/mcp` in Claude Code, find **voltaire** in the list, and click **Authenticate**. A browser will open — log in with Google or GitHub. Once done, run `/voltaire` again.
+Run `/mcp` in Claude Code, find **voltaire** in the list, and click **Authenticate**. A browser will open — log in with Google or GitHub. Once done, run `/voltaire:voltaire` again.
 ```
 
 Do NOT suggest `npx`, do NOT suggest editing settings.json, do NOT improvise. Output only the message above, then stop.
@@ -63,7 +63,7 @@ Then run this sequence **without stopping** unless you need input:
    - Every hour: anomaly detection
    - Every Monday: new recommendation from latest data
 
-   Run /voltaire anytime — the more data flows in, the sharper the analysis gets.
+   Run /voltaire:voltaire anytime — the more data flows in, the sharper the analysis gets.
    ```
    If Free plan: "🔒 Weekly recommendation locked. Upgrade to Pro ($49/mo) at https://app.hivoltaire.com/account"
 
@@ -151,7 +151,7 @@ If you skip this and the project redefines its own `EventType`, you'll get TS234
 
 Find the right locations by reading the codebase — don't add them blindly. After installing, call `mcp__voltaire__mark_applied` with `type: "sdk"`.
 
-**Data lives in MCP tools, not the dashboard.** `app.hivoltaire.com` exists for account and billing only. Never tell the user to "check the dashboard" for their conversion data, SDK token, or recommendations — everything data-related goes through `/voltaire` in Claude Code. The SDK token can be found there if needed, but the MCP flow gives it automatically.
+**Data lives in MCP tools, not the dashboard.** `app.hivoltaire.com` exists for account and billing only. Never tell the user to "check the dashboard" for their conversion data, SDK token, or recommendations — everything data-related goes through `/voltaire:voltaire` in Claude Code. The SDK token can be found there if needed, but the MCP flow gives it automatically.
 
 ## Rules
 - Never apply changes without explaining what you found first

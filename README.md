@@ -20,16 +20,14 @@ A browser window opens to connect your Voltaire account. No API key to copy.
 
 | Command | What it does |
 |---------|-------------|
-| `/voltaire` | Full session: connect Stripe, analyze codebase, apply a fix |
-| `/voltaire-status` | Quick pulse check — conversion rate, revenue, trend |
-| `/voltaire-digest` | Weekly digest — what moved, what worked, what to watch |
-| `/voltaire-undo` | Revert the last fix Voltaire applied |
+| `/voltaire:voltaire` | Full session: connect Stripe, analyze codebase, apply a fix |
+| `/voltaire:voltaire-status` | Quick pulse check — conversion rate, revenue, trend |
 
-Or say it naturally — "fix my paywall", "how is my conversion rate", "undo that last change" — and Claude picks it up automatically.
+Or say it naturally — "fix my paywall", "how is my conversion rate", "undo that last change", "what happened this week" — and Claude picks it up automatically.
 
 ---
 
-## What `/voltaire` does
+## What `/voltaire:voltaire` does
 
 **First run:**
 1. Connects your Stripe account and imports revenue history

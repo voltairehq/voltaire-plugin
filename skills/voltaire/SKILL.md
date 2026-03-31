@@ -10,7 +10,7 @@ Voltaire is a revenue intelligence layer. It tracks paywall events, computes con
 
 ## Available MCP tools
 - `mcp__voltaire__create_app` — first-run bootstrap: create the app (name, category). Returns the SDK token.
-- `mcp__voltaire__setup` — connect Stripe: takes `stripe_secret_key`, optionally `github_repo_url`
+- `mcp__voltaire__setup` — connect Stripe: takes `stripe_secret_key`
 - `mcp__voltaire__get_stats` — current state: revenue connection, SDK status, conversion rate, data volume
 - `mcp__voltaire__analyze_paywall` — full data dump: conversion vs benchmark, revenue, behavioral metrics, 7-day trend, previously applied fixes
 - `mcp__voltaire__get_recommendation` — latest weekly recommendation (Pro users only)
@@ -147,7 +147,7 @@ Voltaire.track('paywall_converted')                        // successful subscri
 ```ts
 import type { EventType } from 'voltaire-sdk'
 ```
-Failure to do this causes TS2345 build errors (`feature_gate_hit not assignable to EventType`).
+If you skip this and the project redefines its own `EventType`, you'll get TS2345 build errors because the project's type won't include `feature_gate_hit` and `upgrade_clicked`.
 
 Find the right locations by reading the codebase — don't add them blindly. After installing, call `mcp__voltaire__mark_applied` with `type: "sdk"`.
 

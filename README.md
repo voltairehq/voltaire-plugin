@@ -31,12 +31,23 @@ Or say it naturally — "fix my paywall", "how is my conversion rate", "undo tha
 
 ## What `/voltaire` does
 
+**First run:**
 1. Connects your Stripe account and imports revenue history
 2. Benchmarks your conversion rate against your category (SaaS, mobile, etc.)
 3. Explores your codebase to find the paywall
 4. Proposes a fix — waits for your confirmation before touching anything
 5. Installs the SDK to start collecting behavioral data
 6. Logs what was changed so future sessions build on it
+
+**Every run after:**
+- Runs live agents on your latest data — timing analysis (when your paywall fires vs optimal), cohort analysis (what separates converters from bouncers)
+- Surfaces price sensitivity signals, feature correlation, upgrade intent rate
+- Builds on past fixes — knows what was tried and what moved the needle
+
+**In the background:**
+- Hourly anomaly detection — email alert if conversion drops significantly
+- Daily digest with behavioral observations
+- Weekly AI recommendation synthesized from all signals (Pro)
 
 ---
 

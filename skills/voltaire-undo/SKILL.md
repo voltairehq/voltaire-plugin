@@ -40,4 +40,4 @@ If the tools are available:
    Run /voltaire when ready to try a different fix.
    ```
 
-**Important:** Only revert code changes Voltaire made. Never revert Stripe setup, SDK installation, or API key config.
+**Important:** Only revert code changes Voltaire made. Never revert Stripe setup, SDK installation, or token config.

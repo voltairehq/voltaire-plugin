@@ -12,9 +12,32 @@ Voltaire is a revenue intelligence layer. It tracks paywall events, computes con
 - `mcp__voltaire__create_app` — first-run bootstrap: create the app (name, category). Returns the SDK token.
 - `mcp__voltaire__setup` — connect Stripe: takes `stripe_secret_key`
 - `mcp__voltaire__get_stats` — current state: revenue connection, SDK status, conversion rate, data volume
-- `mcp__voltaire__analyze_paywall` — full data dump: conversion vs benchmark, revenue, behavioral metrics, 7-day trend, previously applied fixes
+- `mcp__voltaire__analyze_paywall` — returns structured JSON with all raw data. You do all formatting and reasoning.
 - `mcp__voltaire__get_recommendation` — latest weekly recommendation (Pro users only)
 - `mcp__voltaire__mark_applied` — log what was changed so future runs have full context
+
+## analyze_paywall JSON schema
+
+`analyze_paywall` returns a JSON object. Key fields:
+
+- `app` — name, plan, category, platform
+- `lumiere_status` — one of: `"active"` (Pro), `"trial_active"` (14-day trial), `"trial_expired"`, `"locked"`
+- `metrics` — cr_30d, cr_7d, sessions_30d, shown_30d, converted_30d, gate_hit_30d, upgrade_clicked_30d
+- `revenue` — rev_30d, rev_7d, charges_30d
+- `benchmark` — per-metric median + top_quartile, gap_pp vs benchmark
+- `behavioral` — bounce_rate_under_3s_pct, avg_dismiss_seconds, sessions_before_convert_median
+- `feature_correlation` — list of `{feature, cr_with, cr_without, n}` sorted by cr_with desc
+- `trend_7d` — list of `{date, cr_pct, paywall_views, anomaly}`
+- `lumiere` — present when `lumiere_status` is `"active"` or `"trial_active"`. Contains:
+  - `timing` — `{signal, confidence, explanation, recommendation, estimated_impact}` or null
+  - `cohort` — `{key_differentiator, pattern, recommendation, confidence}` or null
+  - `churn` — `{signal, confidence, mrr_cents, active_subs, churn_rate_30d, mrr_growth_rate, explanation, recommendation, estimated_impact}` or null
+  - `price_signal` — string or null
+- `trial_findings` — present when `lumiere_status` is `"trial_expired"`. Same shape as `lumiere`. Show these to the user as the trial gate recap, then ask them to upgrade.
+- `applied_fixes` — last 3 fixes with impact data (cr_before, cr_after, delta) when available
+
+When `lumiere_status` is `"trial_expired"`: present `trial_findings` as the recap of what the agents found, then tell the user their trial ended and they can upgrade at https://app.hivoltaire.com/account.
+When `lumiere_status` is `"locked"`: omit the Lumière block entirely, tell the user to upgrade at https://app.hivoltaire.com/account to unlock the agents.
 
 ## Workflow
 

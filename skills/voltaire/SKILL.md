@@ -227,6 +227,9 @@ import Voltaire from './voltaire'
 
 Voltaire.track('session_started')                          // on app open
 Voltaire.track('feature_used', { feature: 'feature_name' }) // on EACH use, not once per session — frequency matters
+// OR, preferred when you can measure engagement duration:
+const stop = Voltaire.startFeature('feature_name')          // call on feature open/mount
+stop()                                                       // call on feature close/unmount — auto-sends duration_ms
 Voltaire.track('feature_gate_hit', { feature: 'x' })      // user hit premium gate (blocked)
 Voltaire.track('upgrade_clicked')                          // user tapped upgrade CTA
 Voltaire.track('paywall_shown')                            // paywall displayed

@@ -61,9 +61,27 @@ If `mcp__voltaire__get_stats` succeeds, determine which mode you're in:
 
 ### First run (Stripe not connected OR SDK not installed)
 
-**Start with a short, confident intro** — one or two sentences. Tell the user Voltaire is connected, what you can see already (plan, whether Stripe is linked, SDK status from `get_stats`), and what you're about to do. Be direct — not a bullet list, just a sentence.
+**Start with a warm intro — stop and wait for confirmation before doing anything.**
 
-Then run this sequence **without stopping** unless you need input:
+Introduce Voltaire in one sentence, then list exactly what you're about to do based on what `get_stats` shows (Stripe connected or not, SDK installed or not). Then ask if they're ready.
+
+Example:
+```
+I'm Voltaire — a revenue intelligence layer that tracks your paywall, benchmarks your conversion rate against your category, and runs behavioral agents to find what's killing conversions.
+
+Here's what I'm going to do:
+1. Connect Stripe to import your revenue history
+2. Wire the tracking SDK — 7 events that capture exactly how users behave at the paywall
+3. Run a first analysis with Lumière Intelligence — three agents (Timing, Cohort, Churn) that find patterns in the data
+
+Ready?
+```
+
+Adapt the list to what's actually needed: if Stripe is already connected, skip step 1. If SDK is already installed, skip step 2. Be precise — don't list steps that don't apply.
+
+**Wait for the user to confirm before proceeding.**
+
+Once they confirm, run this sequence **without stopping** unless you need input:
 
 1. **Stripe first** — immediately look for `STRIPE_SECRET_KEY` in backend `.env` files (`backend/.env`, `server/.env`, `api/.env`, etc. — never in the frontend). Don't explore the whole codebase first — go straight to `.env` files.
    - If `sk_test_...`: stop, tell the user they need their live key (`sk_live_...`) from dashboard.stripe.com/apikeys.
@@ -71,20 +89,33 @@ Then run this sequence **without stopping** unless you need input:
    - If not found: ask the user to paste it. Same test-key check applies.
 2. **Analyze** — call `mcp__voltaire__analyze_paywall`. Then find the paywall in the codebase.
 3. **SDK** — if not installed, install it now (see SDK section). The SDK token is in `get_stats` — use it directly. If `VOLTAIRE_API_KEY` already exists in the codebase, rename it to `VOLTAIRE_SDK_TOKEN` everywhere.
-4. **Fix** — propose a concrete change, wait for confirmation, apply it.
-5. **Log** — call `mcp__voltaire__mark_applied` for the SDK install and for the fix.
-7. **First-run summary:**
+4. **Lumière Intelligence preview** — with the SDK just wired and data still accumulating, do not propose a fix based on code analysis alone. Instead, explain what the three agents will look for once data flows in:
+
+   - **Timing agent** — finds whether the paywall fires too early (before users reach a value moment) or too late. Needs ~10 paywall_shown events to produce a signal.
+   - **Cohort agent** — compares users who converted vs. users who bounced: what did converters do that bouncers didn't? Needs ~10 paywall sessions.
+   - **Churn agent** — tracks MRR growth, churn rate, and whether subscription revenue is trending in the right direction. Reads directly from Stripe.
+
+   If Stripe is already connected and revenue data exists, surface what Churn can already see (MRR, active subs, churn rate). That's real signal even before SDK data arrives.
+
+   Never fabricate benchmarks. Only cite benchmark numbers that appear in the `benchmark` field of `analyze_paywall`.
+
+5. **Log** — call `mcp__voltaire__mark_applied` for the SDK install.
+6. **First-run summary:**
    ```
    Here's what Voltaire set up:
-   ✅ Stripe connected — revenue history imported
-   ✅ SDK installed — 7 tracking events now collecting data
-   ✅ First fix applied — [one line]
+   ✅ Stripe connected — [X] charges imported, $X revenue visible
+   ✅ SDK installed — 7 events now tracking behavior at the paywall
+
+   What Lumière Intelligence will do as data flows in:
+   - Timing agent: finds if your paywall fires before users reach a value moment
+   - Cohort agent: compares converters vs. bouncers — what separates them
+   - Churn agent: already reading your Stripe data — MRR $X, [X] active subs
 
    What happens automatically:
-   - Every hour: anomaly detection (email if something spikes)
-   - When paywall_shown hits milestones (10, 25, 50, 100...): progress email
+   - Anomaly detection runs every hour — you'll get an email if something spikes
+   - Milestone emails when paywall_shown hits 10, 25, 50, 100... — each one triggers a fresh analysis
 
-   Run /voltaire:voltaire anytime — the more data flows in, the sharper the analysis gets.
+   Run /voltaire:voltaire anytime. The more data flows in, the sharper the agents get.
    ```
    If trial expired: "Your 14-day Lumière Intelligence trial has ended. Upgrade at https://app.hivoltaire.com/account to keep running the agents."
 

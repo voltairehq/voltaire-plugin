@@ -86,8 +86,15 @@ Don't repeat setup. Lead with data — let the user drive.
    Last fix:    [description] — [impact if measurable, or "still collecting data"]
    [Anomaly alert if flagged]
 
-   Lumière recommendation: [one line] — est. +$X/mo  (or 🔒 if trial expired)
+   ✦ Lumière Intelligence
+     Timing:  [signal] [★★☆] — [one-line explanation]
+     Cohort:  [key differentiator] — [one-line pattern]
+     Churn:   MRR $X · churn X%/mo · [signal]
+
+   Recommendation: [one line] — est. +$X/mo
    ```
+   If trial expired: omit the Lumière block entirely, show instead: "Trial ended — upgrade at https://app.hivoltaire.com/account to restore agents."
+   If an agent returned insufficient_data, show: `[agent]: insufficient data ([N] sessions)`
 
 3. **Wait for the user to decide.** Don't propose a fix automatically. They might want to:
    - Ask questions about the data

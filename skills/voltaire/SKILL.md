@@ -110,6 +110,14 @@ Don't repeat setup. Lead with data — let the user drive.
 
    Always surface benchmarks when present in the JSON (`benchmark` field). If there's a gap vs industry median, state it explicitly — this is the number the user should care about most.
 
+   **Funnel reach — mandatory calculation:** Compute `shown_30d / sessions_30d`. If the result is below 0.5 (more than half of sessions never reach the paywall), add this line to the block — it is the most actionable insight in the whole analysis because it means the problem is upstream of the paywall, not the paywall itself:
+   ```
+   Funnel reach:  X% of sessions reach the paywall  ← fix the trigger first
+   ```
+   If funnel reach is above 0.5, omit this line — it is not the bottleneck.
+
+   **Price signal — mandatory when present:** `lumiere.price_signal` is a behavioral signal (fast dismissals, upgrade-click-to-conversion gap) computed by the backend. When non-null, always include it in the Lumière block — it directly changes the recommended action (test a lower price point or a trial). When null, omit it. Do not show it every run if nothing changed — the backend only returns it when the behavioral pattern is present.
+
    If trial expired: add "Trial ended — upgrade at https://app.hivoltaire.com/account to restore agents." and skip the Lumière block below.
 
 3. **Lumière Intelligence — synthesis, not three silos.**
@@ -130,6 +138,7 @@ Don't repeat setup. Lead with data — let the user drive.
      Timing:  [signal] [★★☆] — [one-line]
      Cohort:  [key differentiator] — [one-line]
      Churn:   MRR $X · churn X%/mo · [signal]
+     Price:   [price_signal string]              ← only if lumiere.price_signal is non-null
    ```
 
    **When agents diverge or data is thin**, be honest — don't force a narrative:
@@ -141,6 +150,7 @@ Don't repeat setup. Lead with data — let the user drive.
      Timing:  [signal] [★★☆] — [one-line]
      Cohort:  insufficient data ([N] sessions)
      Churn:   insufficient data (no subscription history)
+     Price:   [price_signal string]              ← only if lumiere.price_signal is non-null
    ```
 
    If an agent has insufficient data, show it inline. Never invent a synthesis from one agent alone.

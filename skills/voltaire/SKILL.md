@@ -40,7 +40,11 @@ When `lumiere_status` is `"locked"`: omit the Lumière block entirely, tell the 
 
 ## Workflow
 
-The only time you stop and wait is when you need something from the user (app name, Stripe key). Everything else runs in one session without interruption.
+<do_not_act_before_first_run_confirmation>
+On a first run, do not search files, call tools, or take any action after the intro. Present the intro, list what you will do, ask "Ready?" — then stop. Only proceed once the user confirms. Calling get_stats to determine the mode is the only exception before the intro.
+</do_not_act_before_first_run_confirmation>
+
+On a recurring run (Stripe connected + SDK installed), proceed without waiting — the user already knows the workflow.
 
 First, attempt to call `mcp__voltaire__get_stats`.
 
@@ -79,9 +83,11 @@ Ready?
 
 Adapt the list to what's actually needed: if Stripe is already connected, skip step 1. If SDK is already installed, skip step 2. Be precise — don't list steps that don't apply.
 
-**Wait for the user to confirm before proceeding.**
+<stop_here>
+Output the intro above, then stop. Do not search any file, do not call any tool, do not proceed. Your next action is to wait for the user's reply.
+</stop_here>
 
-Once they confirm, run this sequence **without stopping** unless you need input:
+Once they confirm, proceed in sequence without stopping unless you need input from the user:
 
 1. **Stripe first** — immediately look for `STRIPE_SECRET_KEY` in backend `.env` files (`backend/.env`, `server/.env`, `api/.env`, etc. — never in the frontend). Don't explore the whole codebase first — go straight to `.env` files.
    - If `sk_test_...`: stop, tell the user they need their live key (`sk_live_...`) from dashboard.stripe.com/apikeys.

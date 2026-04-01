@@ -85,30 +85,78 @@ Don't repeat setup. Lead with data — let the user drive.
    Revenue:     $X this month  [↑↓ vs last month]
    Last fix:    [description] — [impact if measurable, or "still collecting data"]
    [Anomaly alert if flagged]
-
-   ✦ Lumière Intelligence
-     Timing:  [signal] [★★☆] — [one-line explanation]
-     Cohort:  [key differentiator] — [one-line pattern]
-     Churn:   MRR $X · churn X%/mo · [signal]
-
-   Recommendation: [one line] — est. +$X/mo
    ```
-   If trial expired: omit the Lumière block entirely, show instead: "Trial ended — upgrade at https://app.hivoltaire.com/account to restore agents."
-   If an agent returned insufficient_data, show: `[agent]: insufficient data ([N] sessions)`
 
-3. **Wait for the user to decide.** Don't propose a fix automatically. They might want to:
-   - Ask questions about the data
-   - Ask what's causing a specific pattern
-   - Ask for a fix recommendation
-   - Say "apply the recommendation" or "fix X"
+   If trial expired: add "Trial ended — upgrade at https://app.hivoltaire.com/account to restore agents." and skip the Lumière block below.
 
-4. **Once they ask for an action** — propose it clearly (location, change, reason), wait for confirmation, apply it, call `mcp__voltaire__mark_applied`.
+3. **Lumière Intelligence — synthesis, not three silos.**
 
-5. **After applying:**
+   After the metrics block, reason across all three agents. Your job is not to relay each agent's output independently — it's to find what they're collectively saying.
+
+   **When agents converge** (two or more point to the same root cause), write a single synthesis paragraph, then list the individual agent signals below it:
+   ```
+   ✦ Lumière Intelligence
+
+   [One-paragraph synthesis: connect what Timing, Cohort, and/or Churn are saying
+   into a single coherent diagnosis. Example: "The data points to a timing problem
+   made worse by a value-moment gap: paywall fires before users reach 'export', the
+   one feature that predicts conversion (4.1% CR vs 1.6% without it). Churn confirms
+   users are leaving before they get there — median 18 days, mostly before any export.
+   Fix the gate trigger and you likely move all three metrics."]
+
+     Timing:  [signal] [★★☆] — [one-line]
+     Cohort:  [key differentiator] — [one-line]
+     Churn:   MRR $X · churn X%/mo · [signal]
+   ```
+
+   **When agents diverge or data is thin**, be honest — don't force a narrative:
+   ```
+   ✦ Lumière Intelligence
+
+   Timing flags [X] — Cohort and Churn don't have enough data to confirm or contradict.
+
+     Timing:  [signal] [★★☆] — [one-line]
+     Cohort:  insufficient data ([N] sessions)
+     Churn:   insufficient data (no subscription history)
+   ```
+
+   If an agent has insufficient data, show it inline. Never invent a synthesis from one agent alone.
+
+4. **Stop. Wait for the user.**
+
+   Do not propose a fix. Do not suggest what to do next. The user has just seen a diagnosis — let them decide:
+   - They might want to ask questions about the data
+   - They might want to understand a specific pattern
+   - They might say "apply the recommendation" or "fix X"
+   - They might just say "ok thanks"
+
+   All of these are valid. Your job at this point is to answer questions, not to drive toward action.
+
+5. **When the user asks for a fix:**
+
+   **Describe first. Touch nothing.**
+
+   Present exactly:
+   - What file and line you'd change
+   - What the change is
+   - Why this addresses the root cause from the analysis
+
+   Then stop and wait for explicit confirmation ("yes", "do it", "go ahead"). Do not start editing until you have that confirmation.
+
+   Example:
+   ```
+   I'd update `src/Paywall.tsx` line 42 — move the paywall trigger from
+   `onAppLoad` to after the first `export` action. That's where Timing and
+   Cohort both point: users who export convert at 4.1% vs 1.6% without it.
+   The change is ~3 lines. Want me to apply it?
+   ```
+
+6. **After confirmation, apply and log:**
    ```
    Fix applied: [one line]
    Check back in [timeframe] to measure impact.
    ```
+   Call `mcp__voltaire__mark_applied`.
 
 ## SDK installation
 

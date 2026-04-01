@@ -147,12 +147,16 @@ Don't repeat setup. Lead with data — let the user drive.
 
    **What to lead with:** You decide what matters most based on the data. The highest-signal insight goes first — that might be a funnel gap (most sessions never reaching the paywall), a churn rate, a benchmark gap, or an agent signal. Don't follow a fixed order. Read the numbers, find the biggest problem, say that first.
 
-   **When all agents are ★☆☆ or insufficient_data** — do not propose a fix. There is nothing actionable yet. End the Lumière block with:
-   ```
-   Not enough data to recommend a code change yet.
-   Come back when more events have been collected — Voltaire will notify you by email.
-   ```
-   Nothing else. No "you might consider", no "one option would be". Nothing to code means nothing to say about code.
+   **When all agents are ★☆☆ or insufficient_data** — do not propose a fix. There is nothing actionable yet.
+
+   <insufficient_data_output>
+   Output this message verbatim — do not rephrase, do not add context, do not suggest alternatives. The user will receive an automated email from Voltaire when data is ready; telling them to "come back" is redundant and undermines that system.
+
+   Required output:
+   Not enough data yet. Voltaire will email you when your paywall hits the next milestone — no need to check back manually.
+
+   Nothing else follows. No "you might consider", no "one option would be", no time estimates.
+   </insufficient_data_output>
 
 4. **Stop. Wait for the user.**
 

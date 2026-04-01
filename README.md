@@ -43,7 +43,7 @@ Three agents run in parallel on every `/voltaire`:
 - **Cohort:** what separates converters from bouncers, the one feature that predicts conversion
 - **Churn:** MRR health, monthly churn rate, median days before cancel, top cancellation reasons from Stripe
 
-**In the background (free on all plans):**
+**In the background:**
 - Hourly anomaly detection: email alert if conversion drops significantly
 - Daily digest with conversion delta, anomalies, and session patterns
 - Weekly recommendation ranked by revenue impact, every Monday
@@ -52,11 +52,9 @@ Three agents run in parallel on every `/voltaire`:
 
 ## Plans
 
-**Free:** SDK install, data tracking, paywall analysis, daily digest, anomaly alerts, weekly recommendations.
+**14-day trial:** Full Lumière Intelligence access from the first `/voltaire` — all three agents, daily digest, anomaly alerts, weekly recommendations.
 
-**Lumière Intelligence ($49/mo):** Everything in Free, plus the three on-demand agents (Timing, Cohort, Churn) that run on every `/voltaire`.
-
-Upgrade at [app.hivoltaire.com/account](https://app.hivoltaire.com/account).
+**Lumière Intelligence ($49/mo):** Everything in the trial, continued. Upgrade at [app.hivoltaire.com/account](https://app.hivoltaire.com/account).
 
 ---
 

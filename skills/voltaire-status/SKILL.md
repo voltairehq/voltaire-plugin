@@ -35,6 +35,6 @@ If the tools are available:
 
 4. If data is thin (SDK not installed or < 7 days of data): say so clearly. Suggest running `/voltaire` to complete setup.
 
-5. If Free plan and anomaly detected: "🔒 Anomaly alerts and behavioral signals require Pro ($49/mo)."
+5. If trial expired: "Your 14-day Lumière Intelligence trial has ended. Upgrade at https://app.hivoltaire.com/account to restore agent analysis."
 
 No fixes, no recommendations — read-only. For a full analysis and fix, run `/voltaire`.

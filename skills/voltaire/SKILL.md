@@ -65,7 +65,7 @@ Then run this sequence **without stopping** unless you need input:
 
    Run /voltaire:voltaire anytime — the more data flows in, the sharper the analysis gets.
    ```
-   If Free plan: "🔒 Weekly recommendation locked. Upgrade to Pro ($49/mo) at https://app.hivoltaire.com/account"
+   If trial expired: "Your 14-day Lumière Intelligence trial has ended. Upgrade at https://app.hivoltaire.com/account to keep running the agents."
 
 ---
 
@@ -86,7 +86,7 @@ Don't repeat setup. Lead with data — let the user drive.
    Last fix:    [description] — [impact if measurable, or "still collecting data"]
    [Anomaly alert if flagged]
 
-   Pro recommendation: [one line] — est. +$X/mo  (or 🔒 if Free)
+   Lumière recommendation: [one line] — est. +$X/mo  (or 🔒 if trial expired)
    ```
 
 3. **Wait for the user to decide.** Don't propose a fix automatically. They might want to:

@@ -13,7 +13,6 @@ Voltaire is a revenue intelligence layer. It tracks paywall events, computes con
 - `mcp__voltaire__setup` — connect Stripe: takes `stripe_secret_key`
 - `mcp__voltaire__get_stats` — current state: revenue connection, SDK status, conversion rate, data volume
 - `mcp__voltaire__analyze_paywall` — returns structured JSON with all raw data. You do all formatting and reasoning.
-- `mcp__voltaire__get_recommendation` — latest weekly recommendation (Pro users only)
 - `mcp__voltaire__mark_applied` — log what was changed so future runs have full context
 
 ## analyze_paywall JSON schema
@@ -82,9 +81,8 @@ Then run this sequence **without stopping** unless you need input:
    ✅ First fix applied — [one line]
 
    What happens automatically:
-   - Every day: digest email with conversion delta
-   - Every hour: anomaly detection
-   - Every Monday: new recommendation from latest data
+   - Every hour: anomaly detection (email if something spikes)
+   - When paywall_shown hits milestones (10, 25, 50, 100...): progress email
 
    Run /voltaire:voltaire anytime — the more data flows in, the sharper the analysis gets.
    ```
@@ -96,7 +94,7 @@ Then run this sequence **without stopping** unless you need input:
 
 Don't repeat setup. Lead with data — let the user drive.
 
-1. **Call `mcp__voltaire__analyze_paywall`**. If on Pro, also call `mcp__voltaire__get_recommendation`.
+1. **Call `mcp__voltaire__analyze_paywall`**.
 
    **If 0 SDK events received** — ask the user: "No events have been received yet. Did you add `VOLTAIRE_SDK_TOKEN` to your production environment (Render, Vercel, Netlify, etc.)? The `.env` file is local only — the SDK won't initialize in production without the token in your hosting dashboard."
 

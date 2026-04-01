@@ -104,11 +104,13 @@ Don't repeat setup. Lead with data — let the user drive.
    ```
    Since last run [X days ago]:
 
-   Conversion:  X% → Y%  [↑↓ +Z%]   (benchmark: B%)
+   Conversion:  X%  (benchmark: B% · gap: +/-Xpp)
    Revenue:     $X this month  [↑↓ vs last month]
    Last fix:    [description] — [impact if measurable, or "still collecting data"]
    [Anomaly alert if flagged]
    ```
+
+   Always surface benchmarks when present in the JSON (`benchmark` field). If there's a gap vs industry median, state it explicitly — this is the number the user should care about most.
 
    If trial expired: add "Trial ended — upgrade at https://app.hivoltaire.com/account to restore agents." and skip the Lumière block below.
 
@@ -144,6 +146,15 @@ Don't repeat setup. Lead with data — let the user drive.
    ```
 
    If an agent has insufficient data, show it inline. Never invent a synthesis from one agent alone.
+
+   **What to lead with:** You decide what matters most based on the data. The highest-signal insight goes first — that might be a funnel gap (most sessions never reaching the paywall), a churn rate, a benchmark gap, or an agent signal. Don't follow a fixed order. Read the numbers, find the biggest problem, say that first.
+
+   **When all agents are ★☆☆ or insufficient_data** — do not propose a fix. There is nothing actionable yet. End the Lumière block with:
+   ```
+   Not enough data to recommend a code change yet.
+   Come back when more events have been collected — Voltaire will notify you by email.
+   ```
+   Nothing else. No "you might consider", no "one option would be". Nothing to code means nothing to say about code.
 
 4. **Stop. Wait for the user.**
 

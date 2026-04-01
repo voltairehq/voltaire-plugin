@@ -226,7 +226,7 @@ export default Voltaire
 import Voltaire from './voltaire'
 
 Voltaire.track('session_started')                          // on app open
-Voltaire.track('feature_used', { feature: 'feature_name' }) // on key feature use
+Voltaire.track('feature_used', { feature: 'feature_name' }) // on EACH use, not once per session — frequency matters
 Voltaire.track('feature_gate_hit', { feature: 'x' })      // user hit premium gate (blocked)
 Voltaire.track('upgrade_clicked')                          // user tapped upgrade CTA
 Voltaire.track('paywall_shown')                            // paywall displayed

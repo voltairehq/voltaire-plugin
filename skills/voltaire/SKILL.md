@@ -42,20 +42,25 @@ When `lumiere_status` is `"locked"`: omit the Lumière block entirely, tell the 
 
 <do_not_act_before_first_run_confirmation>
 On a first run, do not search files, call tools, or take any action after the intro. Present the intro, list what you will do, ask "Ready?" — then stop. Only proceed once the user confirms. Calling get_stats to determine the mode is the only exception before the intro.
+
+Why: on a first run the user doesn't know what Voltaire will touch in their codebase. Showing the plan first and getting explicit buy-in before reading files or making changes builds trust and prevents surprises.
 </do_not_act_before_first_run_confirmation>
 
 On a recurring run (Stripe connected + SDK installed), proceed without waiting — the user already knows the workflow.
 
 First, attempt to call `mcp__voltaire__get_stats`.
 
-**CRITICAL — if the tool is not available or the call fails with any error:**
-Stop immediately. Output EXACTLY this message, word for word, nothing else:
+<tool_unavailable>
+If the tool is not available or the call fails with any error, stop immediately. Output EXACTLY this message, word for word, nothing else:
 
 ```
 Run `/mcp` in Claude Code, find **voltaire** in the list, and click **Authenticate**. A browser will open — log in with Google or GitHub. Once done, run `/voltaire:voltaire` again.
 ```
 
-Do NOT suggest `npx`, do NOT suggest editing settings.json, do NOT improvise. Output only the message above, then stop.
+Output only the message above, then stop. Do not suggest `npx`, do not suggest editing settings.json, do not improvise.
+
+Why: any other recovery suggestion (npx, manual config) risks breaking the user's MCP setup. The authenticate flow is the only supported path.
+</tool_unavailable>
 
 ---
 
@@ -134,6 +139,18 @@ Don't repeat setup. Lead with data — let the user drive.
 1. **Call `mcp__voltaire__analyze_paywall`**.
 
    **If 0 SDK events received** — ask the user: "No events have been received yet. Did you add `VOLTAIRE_SDK_TOKEN` to your production environment (Render, Vercel, Netlify, etc.)? The `.env` file is local only — the SDK won't initialize in production without the token in your hosting dashboard."
+
+2. **SDK version + feature check** — independent of event volume, always run this:
+   - `npm show voltaire-sdk version` → latest published version
+   - installed version from `package.json`
+   - read `node_modules/voltaire-sdk/dist/index.d.ts` to see all exported functions
+   - grep the codebase for `startFeature` and `setPaywallTrigger`
+
+   If the installed version is outdated OR if exported SDK features are absent from the codebase, add a line to the metrics block:
+   ```
+   SDK:  v{installed} (v{latest} available) — unused: startFeature, setPaywallTrigger
+   ```
+   Only list features genuinely absent from the codebase. If everything is current and fully used, omit this line.
 
 2. **Present a clear state of affairs — always, before doing anything:**
    ```
@@ -237,7 +254,7 @@ Don't repeat setup. Lead with data — let the user drive.
 6. **After confirmation, apply and log:**
    ```
    Fix applied: [one line]
-   Check back in [timeframe] to measure impact.
+   Voltaire will email you when paywall_shown hits the next milestone — that's when impact will be measurable.
    ```
    Call `mcp__voltaire__mark_applied`.
 
@@ -295,8 +312,8 @@ Find the right locations by reading the codebase — don't add them blindly. Aft
 **Data lives in MCP tools, not the dashboard.** `app.hivoltaire.com` exists for account and billing only. Never tell the user to "check the dashboard" for their conversion data, SDK token, or recommendations — everything data-related goes through `/voltaire:voltaire` in Claude Code. The SDK token can be found there if needed, but the MCP flow gives it automatically.
 
 ## Rules
-- Never apply changes without explaining what you found first
-- Always show paywall location, root cause, and proposed change before editing
+- Always explain what you found before applying changes — location, root cause, proposed change
 - `analyze_paywall` returns raw data — you reason about it, don't expect a pre-computed diagnosis
 - Always call `mark_applied` after every fix — this is what builds context over time
 - Never mention a "dashboard" for data — use MCP tools
+- Never tell the user to "check back in X days" or "come back later" — the email milestone system handles that. When more data is needed, reference the email, not a time estimate.

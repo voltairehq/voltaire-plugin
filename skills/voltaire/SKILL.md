@@ -285,11 +285,10 @@ Voltaire.init({ apiKey: process.env.VOLTAIRE_SDK_TOKEN })
 export default Voltaire
 ```
 
-**4. Add the 7 tracking calls** in the right places:
+**4. Add the 6 tracking calls** in the right places (`session_started` is fired automatically by `Voltaire.init()` — do not call it manually):
 ```ts
 import Voltaire from './voltaire'
 
-Voltaire.track('session_started')                          // on app open
 Voltaire.track('feature_used', { feature: 'feature_name' }) // on EACH use, not once per session — frequency matters
 // OR, preferred when you can measure engagement duration:
 const stop = Voltaire.startFeature('feature_name')          // call on feature open/mount

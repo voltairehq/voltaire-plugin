@@ -142,10 +142,10 @@ Don't repeat setup. Lead with data — let the user drive.
    **If 0 SDK events received** — ask the user: "No events have been received yet. Did you add `VOLTAIRE_SDK_TOKEN` to your production environment (Render, Vercel, Netlify, etc.)? The `.env` file is local only — the SDK won't initialize in production without the token in your hosting dashboard."
 
 2. **SDK version + feature check** — independent of event volume, always run this:
-   - `npm show voltaire-sdk version` → latest published version
-   - installed version from `package.json`
-   - read `node_modules/voltaire-sdk/dist/index.d.ts` to see all exported functions
-   - grep the codebase for `startFeature` and `setPaywallTrigger`
+   - Installed version: read `node_modules/voltaire-sdk/package.json` (local file, instant — do NOT call `npm show`)
+   - Latest version: already in `get_stats` response as `sdk_latest_version`
+   - Read `node_modules/voltaire-sdk/dist/index.d.ts` to see all exported functions
+   - Grep the codebase for `startFeature` and `setPaywallTrigger` — exclude `node_modules`
 
    If the installed version is outdated OR if exported SDK features are absent from the codebase, add a line to the metrics block:
    ```

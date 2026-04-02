@@ -21,7 +21,8 @@ Voltaire is a revenue intelligence layer. It tracks paywall events, computes con
 
 - `app` — name, plan, category, platform
 - `lumiere_status` — one of: `"active"` (Pro), `"trial_active"` (14-day trial), `"trial_expired"`, `"locked"`
-- `metrics` — cr_30d, cr_7d, sessions_30d, shown_30d, converted_30d, gate_hit_30d, upgrade_clicked_30d
+- `metrics` — cr_30d, cr_7d, sessions_30d, shown_30d, converted_30d, gate_hit_30d, upgrade_clicked_30d, cr_data_artifact
+  - `cr_data_artifact: true` means `converted_30d > shown_30d` — impression tracking is incomplete (SDK not firing in production). cr_30d will be null. Surface this explicitly: "Conversion rate unavailable — more conversions recorded than paywall views. SDK impressions are likely missing in production."
 - `revenue` — rev_30d, rev_7d, charges_30d
 - `benchmark` — per-metric median + top_quartile, gap_pp vs benchmark
 - `behavioral` — bounce_rate_under_3s_pct, avg_dismiss_seconds, sessions_before_convert_median
